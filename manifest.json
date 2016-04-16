@@ -1,0 +1,30 @@
+{
+    "name": "v-coding",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "",
+    "icons": {
+        "16": "images/icon-16.png",
+        "128": "images/icon-128.png"
+    },
+    "background": {
+        "scripts": [
+            "popup.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "images/icon-19.png",
+            "38": "images/icon-38.png"
+        },
+        "default_title": "Coding+",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "https://coding.net/*/*",
+        "https://ide.coding.net/*",
+        "http://*.codingapp.com/",
+        "http://*.coding.io/"
+    ]
+}
