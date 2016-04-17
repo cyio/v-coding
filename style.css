@@ -544,3 +544,12 @@ body {
 .points-left a {
   color: green;
 }
+
+.search-projects {
+  margin-top: 8px;
+  margin-left: 20px;
+  padding-left: 4px;
+  font-size: 16px;
+  height: 18px;
+  width: 150px;
+}

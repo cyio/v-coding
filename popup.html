@@ -23,6 +23,7 @@
     </header>
     <section id="projects">
       <div class="quick-toolbar">
+        <input class="search-projects" autofocus="autofocus" v-model="name">
         <div class="toolbar-item refresh-projects" id="refresh-projects">
           <i class="fa fa-refresh green"></i>
         </div>
@@ -31,7 +32,7 @@
         </div>
       </div>
       <div id="project-list">
-        <div class="project" v-for="project in projects">
+        <div class="project" v-for="project in projects | filterBy name in 'name'">
           <a class="avatar" href={{project.https_url}} target="_blank">
             <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
             <span class="name">{{project.name}}</span><i class="fa fa-lock" v-if="project.isPrivate"></i>
