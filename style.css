@@ -553,3 +553,12 @@ body {
   height: 18px;
   width: 150px;
 }
+
+.username {
+  display: inline-block;
+  display: inline-block;
+  width: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

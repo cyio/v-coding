@@ -13,14 +13,6 @@
 
 <body>
   <div id="app" class="container">
-    <header id="header">
-      <div class="welcome" v-if="user.name">
-        <h3>Hi, {{user.name}}!</h3>
-        <a href="{{user.path}}" target="_blank">
-          <img class="avatar32" src="{{user.avatar}}"/>
-        </a>
-      </div>
-    </header>
     <section id="projects">
       <div class="quick-toolbar">
         <input class="search-projects" autofocus="autofocus" v-model="name">
@@ -30,6 +22,7 @@
         <div class="toolbar-item remove-activity-update-count" id=" " title="清除提醒">
           <i class="fa fa-trash gray"></i>
         </div>
+        <div class="username" v-if="user.name">{{user.name}}</div>
       </div>
       <div id="project-list">
         <div class="project" v-for="project in projects | filterBy name in 'name'">
