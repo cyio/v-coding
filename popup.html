@@ -8,6 +8,7 @@
   <script type="text/javascript" src="zepto.min.js"></script>
   <script type="text/javascript" src="api.js"></script>
   <script type="text/javascript" src="vue.min.js"></script>
+  <script type="text/javascript" src="vue-resource.min.js"></script>
   <script type="text/javascript" src="popup.js"></script>
 </head>
 
@@ -28,7 +29,7 @@
         <div class="project" v-for="project in projects | filterBy name in 'name'">
           <a class="avatar" href={{project.https_url}} target="_blank">
             <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
-            <span class="name">{{project.name}}</span><i class="fa fa-lock" v-if="project.isPrivate"></i>
+            <span class="name">{{project.name}} {{project.default_branch}}</span><i class="fa fa-lock" v-if="project.isPrivate"></i>
           </a>
         </div>
       </div>
