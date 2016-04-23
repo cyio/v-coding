@@ -1,13 +1,14 @@
 $(function() {
   'use strict';
-  
-  var vm = new Vue({
-    el: '#app',
-    data: {
-      user: {},
-      projects: {},
-      baseUrl: "https://coding.net",
-      notificationUnreadProjects: []
+
+  Vue.component('projects', {
+    data: function () { 
+      return {
+        user: {},
+        projects: {},
+        baseUrl: "https://coding.net",
+        notificationUnreadProjects: []
+      }
     },
     computed: {},
     methods: {
@@ -21,8 +22,9 @@ $(function() {
               'avatar': userData.avatar,
               'path': userData.path,
               'points_left': userData.points_left
-            };
+            };            
           }
+          self.$parent.$data.points_left = self.user.points_left
         });
       },
       removeActivityCount: function () {
@@ -88,6 +90,32 @@ $(function() {
       this.getUser();
       this.loadProjects();
 
+    }
+  })
+  
+  Vue.component('task', {
+    data: function() {
+      return {
+        state: 'RS - Brazil',
+      };
+    },
+    events: {
+      setState: function(name) {
+        this.state = name;
+      }
+    }  
+  });
+  
+  new Vue({
+    el: '#app',
+    data: {
+      currentView: 'projects',
+      points_left: 0
+    },
+    methods: {
+      changeView: function (view) {
+        this.currentView = view
+      }
     }
   })
 });

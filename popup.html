@@ -14,27 +14,34 @@
 
 <body>
   <div id="app" class="container">
-    <section id="projects">
-      <div class="quick-toolbar">
-        <input class="search-projects" autofocus="autofocus" v-model="name">
-        <div class="toolbar-item refresh-projects" id="refresh-projects">
-          <i class="fa fa-refresh green"></i>
+    <projects inline-template v-if="currentView === 'projects'">
+      <section id="projects" class="tab-page">
+        <div class="quick-toolbar">
+          <input class="search-projects" autofocus="autofocus" v-model="name">
+          <div class="toolbar-item refresh-projects" id="refresh-projects" v-on:click="loadProjects">
+            <i class="fa fa-refresh green"></i>
+          </div>
+          <div class="toolbar-item remove-activity-update-count" id=" " v-on:click="removeActivityCount" title="清除提醒">
+            <i class="fa fa-trash gray"></i>
+          </div>
+          <div class="username" v-if="user.name">{{user.name}}</div>
         </div>
-        <div class="toolbar-item remove-activity-update-count" id=" " v-on:click="removeActivityCount" title="清除提醒">
-          <i class="fa fa-trash gray"></i>
+        <div id="project-list">
+          <div class="project" v-for="project in projects | filterBy name in 'name'">
+            <a class="avatar" href="{{baseUrl + project.path  + '/git'}}" target="_blank">
+              <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
+              <span class="name">{{project.name}}</span><i class="fa fa-lock" v-if="project.isPrivate"></i>
+            </a>
+            <a class="commit-history" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><i class="fa fa-history"></i></a>
+          </div>
         </div>
-        <div class="username" v-if="user.name">{{user.name}}</div>
-      </div>
-      <div id="project-list">
-        <div class="project" v-for="project in projects | filterBy name in 'name'">
-          <a class="avatar" href="{{baseUrl + project.path  + '/git'}}" target="_blank">
-            <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
-            <span class="name">{{project.name}}</span><i class="fa fa-lock" v-if="project.isPrivate"></i>
-          </a>
-          <a class="commit-history" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><i class="fa fa-history"></i></a>
-        </div>
-      </div>
-    </section>
+      </section>
+    </projects>
+    <task inline-template v-if="currentView === 'task'">
+      <section class="tab-page">
+        <h1>hello</h1>
+      </section>
+    </task>
     <section id="share" style="display: none;">
       <iframe src="" frameborder="0"></iframe>
       <div class="share-box">
@@ -48,15 +55,15 @@
       </div>
     </section>
     <footer id="footer">
-      <div class="tabs">
-        <div class="tab-item active" data-target="projects">
+      <div class="tabs-nav">
+        <div class="tab-item" v-bind:class="{'active': currentView === 'projects'}" v-on:click="changeView('projects')">
           项目
         </div>
-        <div class="tab-item" data-target="share">
+        <div class="tab-item" v-bind:class="{'active': currentView === 'task'}" v-on:click="changeView('task')">
           冒泡
         </div>
         <div class="tab-item points-left" data-target="">
-          <a href="https://coding.net/user/account/credit" target="blank">MB: {{user.points_left}}</a>
+          <a href="https://coding.net/user/account/credit" target="blank">MB: {{points_left}}</a>
         </div>
       </div>
     </footer>

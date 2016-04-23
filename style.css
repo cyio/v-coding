@@ -216,25 +216,23 @@ body.dimmer:before {
     margin-top: 4px;
 }
 
-#projects, #share {
+.tab-page {
     height: 420px;
 }
 
 /* footer and tabs */
 #footer {
     height: 40px;
-    -webkit-box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.2);
     box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.2);
 }
 
-#footer .tabs {
+#footer .tabs-nav {
     height: 40px;
     font-size: 16px;
     position: relative;
 }
 
-#footer .tabs .tab-item {
+#footer .tabs-nav .tab-item {
     display: inline-block;
     width: 33.3%;
     height: 100%;
@@ -246,11 +244,11 @@ body.dimmer:before {
     cursor: pointer;
 }
 
-#footer .tabs .tab-item.active {
+#footer .tabs-nav .tab-item.active {
     border-bottom: 2px solid #4db0f4 !important;
 }
 
-#footer .tabs .tab-item:hover {
+#footer .tabs-nav .tab-item:hover {
     border-bottom: 2px solid #EEE;
 }
 
