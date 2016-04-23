@@ -561,7 +561,8 @@ body {
   text-overflow: ellipsis;
 }
 
-.commit-history {
+.project-link {
   font-size: 16px;
   padding: 2px;
+  color: #6D6D6D;
 }
