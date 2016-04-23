@@ -562,3 +562,8 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.commit-history {
+  font-size: 16px;
+  padding: 2px;
+}
