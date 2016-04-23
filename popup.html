@@ -20,7 +20,7 @@
         <div class="toolbar-item refresh-projects" id="refresh-projects">
           <i class="fa fa-refresh green"></i>
         </div>
-        <div class="toolbar-item remove-activity-update-count" id=" " title="清除提醒">
+        <div class="toolbar-item remove-activity-update-count" id=" " v-on:click="removeActivityCount" title="清除提醒">
           <i class="fa fa-trash gray"></i>
         </div>
         <div class="username" v-if="user.name">{{user.name}}</div>
