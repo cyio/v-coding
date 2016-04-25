@@ -53,9 +53,16 @@
 		var url = [CODING_HOST, '/api/current_user'].join('');
 		return get(url, callback);
 	};
-
+	
+	var task = {
+		list: function (projectID, user, status, callback) {
+			var url = [CODING_HOST, '/api/project/' + projectID + '/tasks/user/' + user + '/' + status + '?page=1&pageSize=10'].join('');
+			console.log(url)
+			return get(url, callback)
+		}
+	}
 	var projects = function (type, callback) {
-		var url = [CODING_HOST, '/api/projects?pageSize=1000'].join('');
+		var url = [CODING_HOST, '/api/user/projects?pageSize=1000'].join('');
 		return get(url, function loadAllProjects(result) {
 			if (result.code) {
 				if (callback) {
@@ -207,6 +214,7 @@
 		projects: projects,
 		deletePaas: deletePaas,
 		services: services,
+		task: task,
 		avaServices: avaServices,
 		createAndBindService: createAndBindService,
 		createServiceInstance: createServiceInstance,

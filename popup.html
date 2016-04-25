@@ -40,8 +40,36 @@
       </section>
     </projects>
     <task inline-template v-if="currentView === 'task'">
-      <section class="tab-page">
-        <h1>hello</h1>
+      <section class="todoapp tab-page">
+        <header class="header">
+          <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" >
+        </header>
+        <section class="main">
+          <input class="toggle-all" type="checkbox">
+          <ul class="todo-list" v-for="todo in todos">
+            <li class="todo">
+              <div class="view">
+                <input class="toggle" type="checkbox">
+                <label>{{ todo.title }}</label>
+                <button class="destroy" ></button>
+              </div>
+              <input class="edit" type="text">
+            </li>
+          </ul>
+        </section>
+        <footer class="footer">
+          <span class="todo-count">
+            <strong>10</strong>item left
+          </span>
+          <ul class="filters">
+            <li><a href="#/all">All</a></li>
+            <li><a href="#/active">Active</a></li>
+            <li><a href="#/completed">Completed</a></li>
+          </ul>
+          <button class="clear-completed">
+            Clear completed
+          </button>
+        </footer>
       </section>
     </task>
     <section id="share" style="display: none;">
@@ -62,7 +90,7 @@
           项目
         </div>
         <div class="tab-item" v-bind:class="{'active': currentView === 'task'}" v-on:click="changeView('task')">
-          冒泡
+          任务
         </div>
         <div class="tab-item points-left" data-target="">
           <a href="https://coding.net/user/account/credit" target="blank">MB: {{points_left}}</a>

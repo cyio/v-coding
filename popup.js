@@ -92,18 +92,29 @@ $(function() {
 
     }
   })
-  
+  // all 全部
+  // processing 正在进行
+  // done 完成
   Vue.component('task', {
     data: function() {
       return {
-        state: 'RS - Brazil',
+        todos: [],
+        newTodo: '',
+        editedTodo: null,
+        visibility: 'all'
       };
     },
-    events: {
-      setState: function(name) {
-        this.state = name;
-      }
-    }  
+    methods: {
+      
+    },
+    ready: function () {
+      var self = this
+      
+      CodingAPI.task.list('346952', 'cyio', 'all', function (result) {
+        console.log(result.data.list[0])
+        self.todos.push({ title: result.data.list[0].content, completed: false })
+      });
+    }
   });
   
   new Vue({
