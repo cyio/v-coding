@@ -12,7 +12,6 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
       });
     }
 
-    if(num>0)
-      chrome.browserAction.setBadgeText({text:String(num)});
+    chrome.browserAction.setBadgeText({text:num>0?String(num):''});
   });            
 });
