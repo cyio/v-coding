@@ -48,6 +48,10 @@
 	var del = function (url, callback) {
 		return ajax(url, callback, 'DELETE');
 	};
+	
+	var put = function (url, callback, data) {
+		return ajax(url, callback, 'PUT', data);
+	};
 
 	var currentUser = function (callback) {
 		var url = [CODING_HOST, '/api/current_user'].join('');
@@ -56,9 +60,22 @@
 	
 	var task = {
 		list: function (projectID, user, status, callback) {
-			var url = [CODING_HOST, '/api/project/' + projectID + '/tasks/user/' + user + '/' + status + '?page=1&pageSize=10'].join('');
-			console.log(url)
+			var url = [CODING_HOST, '/api/project/' + projectID + '/tasks/user/' + user + '/' + status + '?page=1&pageSize=10'].join('');			
 			return get(url, callback)
+		},
+		create: function (projectID, userID, todo, callback) {
+			var url = [CODING_HOST, '/api/project/' + projectID + '/task?owner_id=' + userID + '&content=' + todo.title + ''].join('');
+			return post(url, callback)
+		},
+		delete: function (projectID, todoID, callback) {
+			var url = [CODING_HOST, '/api/project/' + projectID + '/task/' + todoID + ''].join('');
+			return del(url, callback)
+		},
+		finish: function (projectID, userID, todoID, callback) {
+			var url = [CODING_HOST, '/api/task/' + todoID + '/status'].join('');
+			return put(url, callback, {
+				status: 2
+			})
 		}
 	}
 	var projects = function (type, callback) {
