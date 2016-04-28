@@ -60,6 +60,7 @@ $(function() {
                       'path': project.project_path,
                       'icon': project.icon,
                       'name': project.name,
+                      'id': project.id,
                       'https_url': project.https_url,
                       'ssh_url': project.ssh_url,
                       'isPrivate': !project.is_public,
@@ -76,13 +77,15 @@ $(function() {
         }
         
         getProjects().then(function(projects){
-          $.each(projects , function(i, val) { 
+          $.each(projects , function(i, val) {
             self.$http.get('https://coding.net/api/user/' + projects[i].user  + '/project/' + projects[i].name + '/git/branches', function(result, status, request){
               if(status == 200 && result.code === 0) {
                 projects[i].default_branch = result.data.list[0].name
               }
             });
           });
+          
+          vCodingStorage.save(self.projects)
         })
       }
     },
@@ -98,10 +101,11 @@ $(function() {
   Vue.component('task', {
     data: function() {
       return {
-        todos: [],
+        todos: {},
         newTodo: '',
         editedTodo: null,
-        visibility: 'all'
+        visibility: 'all',
+        projects: vCodingStorage.fetch()
       };
     },
     methods: {
@@ -109,11 +113,57 @@ $(function() {
     },
     ready: function () {
       var self = this
-      
-      CodingAPI.task.list('346952', 'cyio', 'all', function (result) {
-        console.log(result.data.list[0])
-        self.todos.push({ title: result.data.list[0].content, completed: false })
-      });
+      $.each(self.projects , function(i, val) {
+        var projectID = self.projects[i].id
+        
+        CodingAPI.task.list(projectID, 'cyio', 'all', function (result) {
+          console.log(result)
+          if (!result.code) {
+            if(result.data.list.length > 0) {
+              $.each(result.data.list, function(i, val) {
+                var task = result.data.list[i]
+                self.todos[projectID] = {
+                  title: task.content, 
+                  status: task.status
+                }
+              })
+              console.log(self.todos)
+            }
+          } else {
+              self.todos[projectID] = {}
+          }
+          // console.log(result.data.list[0])
+          // if (result.data.list[0].status === 1) {
+          //   isCompleted = false
+          // } else (result.data.list[0].status === 2) {
+          //   isCompleted = true
+          // }
+          // self.todos.projectID = {
+          //   title: result.data.list[0].content, 
+          //   completed: false
+          // }
+          // console.log(self.todos.projectID.title)
+        });
+
+      })
+      // CodingAPI.task.create('212938', '20203', this.todos[0], function (result) {
+      //   console.log(result)
+      //   if (result.code === 0) {
+      //     // result.data.id
+      //   }
+      // });
+      // CodingAPI.task.delete('212938', '584381', function (result) {
+      //   console.log(result)
+      //   if (result.code === 0) {
+      //     // result.data.id
+      //   }
+      // });
+      // CodingAPI.task.finish('212938', 'cyio', '584388', function (result) {
+      //   // console.log(result)
+      //   if (result.code === 0) {
+      //     // result.data.id
+      //   }
+      // });
     }
   });
   

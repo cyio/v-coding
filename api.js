@@ -71,8 +71,12 @@
 			var url = [CODING_HOST, '/api/project/' + projectID + '/task/' + todoID + ''].join('');
 			return del(url, callback)
 		},
-		finish: function (projectID, userID, todoID, callback) {
+		toggle: function (projectID, userID, todoID, callback) {
 			var url = [CODING_HOST, '/api/task/' + todoID + '/status'].join('');
+			var tasks = {
+				processing: 1,
+				done: 2
+			}
 			return put(url, callback, {
 				status: 2
 			})
