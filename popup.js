@@ -38,6 +38,7 @@ $(function() {
           });
           self.notificationUnreadProjects = [];
           self.loadProjects();
+          chrome.browserAction.setBadgeText({text:''});
         });
       },
       loadProjects: function () {

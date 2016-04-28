@@ -9,8 +9,11 @@
     },
     "background": {
         "scripts": [
-            "popup.js"
-        ]
+            "zepto.min.js",
+            "api.js",
+            "background.js"
+        ],
+        "persistent": false
     },
     "browser_action": {
         "default_icon": {
@@ -21,6 +24,7 @@
         "default_popup": "popup.html"
     },
     "permissions": [
+        "alarms",
         "tabs",
         "https://coding.net/*/*",
         "https://ide.coding.net/*",
