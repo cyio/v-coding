@@ -46,13 +46,13 @@
         <header class="header">
           <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" >
         </header>
-        <section class="main">
+        <section class="main" v-if="showLists">
           <input class="toggle-all" type="checkbox">
-          <ul class="todo-list" v-for="todo in todos">
+          <ul class="todo-list" v-for="index in todos">
             <li class="todo">
               <div class="view">
                 <input class="toggle" type="checkbox">
-                <label>{{ todo.title }}</label>
+                <label>{{ index.title }}</label>
                 <button class="destroy" ></button>
               </div>
               <input class="edit" type="text">
@@ -67,6 +67,16 @@
             <li><a href="#/all">All</a></li>
             <li><a href="#/active">Active</a></li>
             <li><a href="#/completed">Completed</a></li>
+            <li class="project-select">
+              <button v-on:click="showProjectMenu = !showProjectMenu">选择项目</button>
+              <div class="project-menu" v-if="showProjectMenu">
+                <div class="item" 
+                  v-for="project in projects | filterBy name in 'name'" 
+                  v-on:click="loadTodos(project.id)">
+                  {{project.name}}
+                </div>
+              </div>
+            </li>
           </ul>
           <button class="clear-completed">
             Clear completed

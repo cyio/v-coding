@@ -579,11 +579,8 @@ input[type="checkbox"] {
 
 .todoapp {
     background: #fff;
-    margin: 30px 0 40px 0;
     width: 98%;
     position: relative;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
-                0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
 .todoapp input::-webkit-input-placeholder {
@@ -788,21 +785,6 @@ label[for='toggle-all'] {
     border-top: 1px solid #e6e6e6;
 }
 
-.footer:before {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 50px;
-    overflow: hidden;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-                0 8px 0 -3px #f6f6f6,
-                0 9px 1px -3px rgba(0, 0, 0, 0.2),
-                0 16px 0 -6px #f6f6f6,
-                0 17px 2px -6px rgba(0, 0, 0, 0.2);
-}
-
 .todo-count {
     float: left;
     text-align: left;
@@ -821,7 +803,7 @@ label[for='toggle-all'] {
     left: 0;
 }
 
-.filters li {
+.filters>li {
     display: inline;
 }
 
@@ -909,4 +891,23 @@ html .clear-completed:active {
     .filters {
         bottom: 10px;
     }
+}
+
+// 任务
+.project-select {
+    position: relative;
+}
+.project-menu {
+    position: absolute;
+    bottom: 40px;
+    left: 210px;
+    background-color: #f3f3f7;
+    border: 1px solid #b5b6b5;
+    max-height: 200px;
+    overflow: scroll;
+    text-align: left;
+    padding: 10px;
+}
+.project-menu .item {
+    line-height: 22px;
 }

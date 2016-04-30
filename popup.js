@@ -102,51 +102,58 @@ $(function() {
   Vue.component('task', {
     data: function() {
       return {
-        todos: {},
+				todos: [],
         newTodo: '',
         editedTodo: null,
         visibility: 'all',
+        showLists: false,
+        showProjectMenu: false,
         projects: vCodingStorage.fetch()
       };
     },
     methods: {
-      
+      loadTodos: function (projectID) {
+              console.log(projectID)
+              var self = this
+              self.todos.length = 0
+              self.showLists = false
+              // 346952
+              // var projectID = 346952  
+              // var projectID = 346952  
+              var getTodos = function () {
+                return new Promise (
+                  function (resolve, reject) {
+                    CodingAPI.task.list(projectID, 'cyio', 'all', function (result) {
+                      if (!result.code) {
+                        if(result.data.list.length > 0) {
+                          $.each(result.data.list, function(i, val) {
+                            var task = result.data.list[i]
+                            self.todos[i] = {
+                              id: task.id,
+                              title: task.content, 
+                              status: task.status
+                            }
+                          })
+                        }
+                        
+                        resolve(self.todos);
+                      } else {
+                        reject('fail')
+                      }
+                    });
+                  }
+                ) 
+              }
+              
+              getTodos().then(function(result){
+                if (result.length === 0) return
+                self.showLists = true
+              })
+      }
     },
     ready: function () {
-      var self = this
-      $.each(self.projects , function(i, val) {
-        var projectID = self.projects[i].id
-        
-        CodingAPI.task.list(projectID, 'cyio', 'all', function (result) {
-          console.log(result)
-          if (!result.code) {
-            if(result.data.list.length > 0) {
-              $.each(result.data.list, function(i, val) {
-                var task = result.data.list[i]
-                self.todos[projectID] = {
-                  title: task.content, 
-                  status: task.status
-                }
-              })
-              console.log(self.todos)
-            }
-          } else {
-              self.todos[projectID] = {}
-          }
-          // console.log(result.data.list[0])
-          // if (result.data.list[0].status === 1) {
-          //   isCompleted = false
-          // } else (result.data.list[0].status === 2) {
-          //   isCompleted = true
-          // }
-          // self.todos.projectID = {
-          //   title: result.data.list[0].content, 
-          //   completed: false
-          // }
-          // console.log(self.todos.projectID.title)
-        });
 
-      })
+
       // CodingAPI.task.create('212938', '20203', this.todos[0], function (result) {
       //   console.log(result)
       //   if (result.code === 0) {
