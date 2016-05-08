@@ -49,7 +49,7 @@
         <section class="main" v-if="showLists">
           <input class="toggle-all" type="checkbox">
           <ul class="todo-list">
-            <li class="todo" v-for="(index, todo) in todos">
+            <li class="todo" v-for="(index, todo) in filterTodos">
               <div class="view">
                 <input class="toggle" type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
                 <label>{{ todo.title }}</label>
@@ -64,9 +64,9 @@
             <strong>10</strong>item left
           </span>
           <ul class="filters">
-            <li><a href="#/all">全部</a></li>
-            <li><a href="#/active">进行中</a></li>
-            <li><a href="#/completed">已完成</a></li>
+            <li><a href="#/all" @click="showAllTodos">全部</a></li>
+            <li><a href="#/active" @click="showProcessingTodos">进行中</a></li>
+            <li><a href="#/completed" @click="showDoneTodos">已完成</a></li>
             <li class="project-select">
               <button v-on:click="showProjectMenu = !showProjectMenu">选择项目</button>
               <div class="project-menu" v-if="showProjectMenu">

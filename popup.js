@@ -100,6 +100,22 @@ $(function() {
   // all 全部
   // processing 正在进行
   // done 完成
+  var filters = {
+    all: function (todos) {
+      return todos;
+    },
+    processing: function (todos) {
+      return todos.filter(function (todo) {
+        return !todo.status;
+      });
+    },
+    done: function (todos) {
+      return todos.filter(function (todo) {
+        return todo.status;
+      });
+    }
+  };
+
   Vue.component('task', {
     data: function() {
       return {
@@ -113,6 +129,29 @@ $(function() {
         user: vCodingStorage.fetch().user,
         currentProject: {}
       };
+    },
+    computed: {
+      //当前显示的todos
+      filterTodos: function(){
+        return filters[this.visibility](this.todos);
+      },
+      //没有完成的todo
+      remaining: function(){
+        return filters.processing(this.todos).length;
+      },
+      allDone: {
+        get: function () {
+          console.log('get alldone')  
+          return this.remaining === 0;
+        },
+        set: function (value) {
+          console.log('set alldone');
+          this.todos.forEach(function (todo) {
+            todo.done = value;
+          });
+        }
+      }
+
     },
     methods: {
       loadTodos: function (projectID) {
@@ -171,7 +210,6 @@ $(function() {
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status?status=2:status=1
         CodingAPI.task.toggle(this.todos[index].project.name, this.projects[0].user, this.todos[index].id, status, function (result) {
-          console.log(result)
         })
       },
       addTodo: function () {
@@ -183,6 +221,7 @@ $(function() {
         CodingAPI.task.create(this.currentProject.id, this.user.id, content, function (result) {
           if (result.code === 0) {
             console.log('添加成功')
+            self.loadTodos(self.currentProject.id)
             self.newTodo = '';
           }
         })
@@ -191,6 +230,18 @@ $(function() {
         CodingAPI.task.delete(this.currentProject.id, todoID, function (result) {
           console.log(result)
         })
+      },
+      //显示所有todos
+      showAllTodos: function(){
+        this.visibility = 'all';
+      },
+      //显示未完成的todos
+      showProcessingTodos: function(){
+        this.visibility = 'processing';
+      },
+      //显示已完成的todos
+      showDoneTodos: function(){
+        this.visibility = 'done';
       },
       debug: function (i) {
         console.log(this.todos[i].status)
