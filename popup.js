@@ -187,6 +187,11 @@ $(function() {
           }
         })
       },
+      deleteTodo: function (todoID) {
+        CodingAPI.task.delete(this.currentProject.id, todoID, function (result) {
+          console.log(result)
+        })
+      },
       debug: function (i) {
         console.log(this.todos[i].status)
       }

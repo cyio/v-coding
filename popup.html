@@ -53,7 +53,7 @@
               <div class="view">
                 <input class="toggle" type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
                 <label>{{ todo.title }}</label>
-                <button class="destroy" ></button>
+                <button class="destroy" @click="deleteTodo(todo.id)"></button>
               </div>
               <input class="edit" type="text">
             </li>
