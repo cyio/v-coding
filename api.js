@@ -71,14 +71,11 @@
 			var url = [CODING_HOST, '/api/project/' + projectID + '/task/' + todoID + ''].join('');
 			return del(url, callback)
 		},
-		toggle: function (projectID, userID, todoID, callback) {
-			var url = [CODING_HOST, '/api/task/' + todoID + '/status'].join('');
-			var tasks = {
-				processing: 1,
-				done: 2
-			}
+		toggle: function (projectName, userName, todoID, status, callback) {
+			var url = [CODING_HOST, '/api/user/' + userName + '/project/' + projectName + '/task/' + todoID + '/status'].join('');
+			console.log(url + ' ' + status)
 			return put(url, callback, {
-				status: 2
+				status: status
 			})
 		}
 	}

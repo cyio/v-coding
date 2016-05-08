@@ -48,11 +48,11 @@
         </header>
         <section class="main" v-if="showLists">
           <input class="toggle-all" type="checkbox">
-          <ul class="todo-list" v-for="index in todos">
-            <li class="todo">
+          <ul class="todo-list">
+            <li class="todo" v-for="(index, todo) in todos">
               <div class="view">
-                <input class="toggle" type="checkbox">
-                <label>{{ index.title }}</label>
+                <input class="toggle" type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
+                <label>{{ todo.title }}</label>
                 <button class="destroy" ></button>
               </div>
               <input class="edit" type="text">

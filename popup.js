@@ -113,25 +113,35 @@ $(function() {
     },
     methods: {
       loadTodos: function (projectID) {
-              console.log(projectID)
+              // console.log(projectID)
               var self = this
+              var user = this.projects[0].user
               self.todos.length = 0
               self.showLists = false
-              // 346952
-              // var projectID = 346952  
-              // var projectID = 346952  
+              
               var getTodos = function () {
                 return new Promise (
                   function (resolve, reject) {
-                    CodingAPI.task.list(projectID, 'cyio', 'all', function (result) {
+                    CodingAPI.task.list(projectID, user, 'all', function (result) {
                       if (!result.code) {
                         if(result.data.list.length > 0) {
                           $.each(result.data.list, function(i, val) {
-                            var task = result.data.list[i]
+                            var task = result.data.list[i];
+                            // console.log(task)
+                            var status;
+                            if (task.status === 1) { 
+                              status=false
+                            } else {
+                              status=true
+                            }
                             self.todos[i] = {
                               id: task.id,
                               title: task.content, 
-                              status: task.status
+                              status: status,
+                              project: {
+                                id: task.project.id,
+                                name: task.project.name
+                              }
                             }
                           })
                         }
@@ -148,11 +158,28 @@ $(function() {
               getTodos().then(function(result){
                 if (result.length === 0) return
                 self.showLists = true
+                // console.log(self.todos)
               })
+      },
+      toggleTodo: function (index) {
+        var status;
+        // 监听v-model数据可能比较麻烦，这里是变通实现
+        !this.todos[index].status?status=2:status=1
+        CodingAPI.task.toggle(this.todos[index].project.name, this.projects[0].user, this.todos[index].id, status, function (result) {
+          console.log(result)
+        })
+      },
+      debug: function (i) {
+        console.log(this.todos[i].status)
       }
     },
     ready: function () {
-
+      var self = this
+      // $(document).not(".project-select").click(function() {
+      //   if (self.showProjectMenu) {
+      //     self.showProjectMenu = false
+      //   }
+      // });
 
       // CodingAPI.task.create('212938', '20203', this.todos[0], function (result) {
       //   console.log(result)
