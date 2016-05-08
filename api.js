@@ -63,8 +63,8 @@
 			var url = [CODING_HOST, '/api/project/' + projectID + '/tasks/user/' + user + '/' + status + '?page=1&pageSize=10'].join('');			
 			return get(url, callback)
 		},
-		create: function (projectID, userID, todo, callback) {
-			var url = [CODING_HOST, '/api/project/' + projectID + '/task?owner_id=' + userID + '&content=' + todo.title + ''].join('');
+		create: function (projectID, userID, content, callback) {
+			var url = [CODING_HOST, '/api/project/' + projectID + '/task?owner_id=' + userID + '&content=' + content + ''].join('');
 			return post(url, callback)
 		},
 		delete: function (projectID, todoID, callback) {

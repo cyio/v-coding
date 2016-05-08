@@ -18,7 +18,8 @@ $(function() {
           if (!result.code) {
             var userData = result.data;
             self.user = {
-              name: userData.name,
+              'name': userData.name,
+              'id': userData.id,
               'avatar': userData.avatar,
               'path': userData.path,
               'points_left': userData.points_left
@@ -86,7 +87,7 @@ $(function() {
             });
           });
           
-          vCodingStorage.save(self.projects)
+          vCodingStorage.save(self.$data)
         })
       }
     },
@@ -108,7 +109,9 @@ $(function() {
         visibility: 'all',
         showLists: false,
         showProjectMenu: false,
-        projects: vCodingStorage.fetch()
+        projects: vCodingStorage.fetch().projects,
+        user: vCodingStorage.fetch().user,
+        currentProject: {}
       };
     },
     methods: {
@@ -143,6 +146,8 @@ $(function() {
                                 name: task.project.name
                               }
                             }
+                            
+                            self.currentProject = self.todos[i].project                         
                           })
                         }
                         
@@ -167,6 +172,19 @@ $(function() {
         !this.todos[index].status?status=2:status=1
         CodingAPI.task.toggle(this.todos[index].project.name, this.projects[0].user, this.todos[index].id, status, function (result) {
           console.log(result)
+        })
+      },
+      addTodo: function () {
+        var self = this
+        var content = this.newTodo && this.newTodo.trim();
+        if(!content){
+          return false;
+        }
+        CodingAPI.task.create(this.currentProject.id, this.user.id, content, function (result) {
+          if (result.code === 0) {
+            console.log('添加成功')
+            self.newTodo = '';
+          }
         })
       },
       debug: function (i) {

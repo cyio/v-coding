@@ -44,7 +44,7 @@
     <task inline-template v-if="currentView === 'task'">
       <section class="todoapp tab-page">
         <header class="header">
-          <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" >
+          <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
         </header>
         <section class="main" v-if="showLists">
           <input class="toggle-all" type="checkbox">
@@ -64,9 +64,9 @@
             <strong>10</strong>item left
           </span>
           <ul class="filters">
-            <li><a href="#/all">All</a></li>
-            <li><a href="#/active">Active</a></li>
-            <li><a href="#/completed">Completed</a></li>
+            <li><a href="#/all">全部</a></li>
+            <li><a href="#/active">进行中</a></li>
+            <li><a href="#/completed">已完成</a></li>
             <li class="project-select">
               <button v-on:click="showProjectMenu = !showProjectMenu">选择项目</button>
               <div class="project-menu" v-if="showProjectMenu">
