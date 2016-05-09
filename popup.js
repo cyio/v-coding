@@ -127,7 +127,8 @@ $(function() {
         showProjectMenu: false,
         projects: vCodingStorage.fetch().projects,
         user: vCodingStorage.fetch().user,
-        currentProject: {}
+        currentProject: {},
+        remainCount: 0
       };
     },
     computed: {
@@ -137,7 +138,7 @@ $(function() {
       },
       //没有完成的todo
       remaining: function(){
-        return filters.processing(this.todos).length;
+        return filters.processing(this.todos);
       },
       allDone: {
         get: function () {
