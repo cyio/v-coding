@@ -68,19 +68,16 @@
             <li><a href="#/active" @click="showProcessingTodos">进行中</a></li>
             <li><a href="#/completed" @click="showDoneTodos">已完成</a></li>
             <li class="project-select">
-              <button v-on:click="showProjectMenu = !showProjectMenu">选择项目</button>
-              <div class="project-menu" v-if="showProjectMenu">
-                <div class="item" 
-                  v-for="project in projects | filterBy name in 'name'" 
-                  v-on:click="loadTodos(project.id)">
-                  {{project.name}}
-                </div>
-              </div>
+            <li class="dropdown">
+              <span>选择项目</span>
+              <ul class="dropdown-content">
+                <li class="dropdown-item" v-for="project in projects | filterBy name in 'name'" v-on:click="loadTodos(project.id)">{{project.name}}</li>
+              </ul>
             </li>
           </ul>
-          <button class="clear-completed">
+<!--           <button class="clear-completed">
             Clear completed
-          </button>
+          </button> -->
         </footer>
       </section>
     </task>

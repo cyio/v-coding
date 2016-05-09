@@ -893,20 +893,39 @@ html .clear-completed:active {
 }
 
 // 任务
-.project-select {
+
+.dropdown {
     position: relative;
+    display: inline-block;
 }
-.project-menu {
+
+.dropdown-content {
+    opacity: 0;
+    z-index: -1;
     position: absolute;
-    bottom: 40px;
-    left: 210px;
-    background-color: #f3f3f7;
-    border: 1px solid #b5b6b5;
-    max-height: 200px;
+    bottom: 0;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    // border: 1px solid #b5b6b5;
     overflow: scroll;
     text-align: left;
-    padding: 10px;
+    max-height: 380px;
+    list-style: none;
+    padding: 15px 10px;
+    font-size: 14px;
 }
-.project-menu .item {
+
+.dropdown-item {
     line-height: 22px;
+}
+.dropdown-item:hover {
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    z-index: 100;
+    transition: opacity .3s
 }
