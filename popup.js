@@ -127,7 +127,7 @@ $(function() {
         showProjectMenu: false,
         projects: vCodingStorage.fetch().projects,
         user: vCodingStorage.fetch().user,
-        currentProject: {},
+        lastProjectID: localStorage.lastProjectID || null,
         remainCount: 0
       };
     },
@@ -152,7 +152,6 @@ $(function() {
           });
         }
       }
-
     },
     methods: {
       loadTodos: function (projectID) {
@@ -187,7 +186,8 @@ $(function() {
                               }
                             }
                             
-                            self.currentProject = self.todos[i].project                         
+                            self.currentProject = self.todos[i].project
+                            localStorage.lastProjectID = self.currentProject.id                       
                           })
                         }
                         
@@ -201,9 +201,10 @@ $(function() {
               }
               
               getTodos().then(function(result){
-                if (result.length === 0) return
-                self.showLists = true
-                // console.log(self.todos)
+                // if (result.length === 0) return
+                // console.log('not return')
+                // self.showLists = true
+                result.length === 0 ? self.showLists = false : self.showLists = true
               })
       },
       toggleTodo: function (index) {
@@ -250,6 +251,9 @@ $(function() {
     },
     ready: function () {
       var self = this
+      if (this.lastProjectID) {
+        this.loadTodos(self.lastProjectID)
+      }
       // $(document).not(".project-select").click(function() {
       //   if (self.showProjectMenu) {
       //     self.showProjectMenu = false

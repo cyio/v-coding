@@ -59,14 +59,18 @@
             </li>
           </ul>
         </section>
+        <section class="placeholder" v-else>
+          <h3 v-if="!lastProjectID">尚未选择项目</h3>
+          <h3 v-else>此项目暂无任务</h3>
+        </section>
         <footer class="footer">
           <span class="todo-count">
             共 <strong>{{ filterTodos.length }}</strong> 项
           </span>
           <ul class="filters">
-            <li><a href="#/all" @click="showAllTodos">全部</a></li>
-            <li><a href="#/active" @click="showProcessingTodos">进行中</a></li>
-            <li><a href="#/completed" @click="showDoneTodos">已完成</a></li>
+            <li><a @click="showAllTodos" v-bind:class="{ 'active': visibility === 'all' }">全部</a></li>            
+            <li><a @click="showProcessingTodos" v-bind:class="{ 'active': visibility === 'processing' }">进行中</a></li>
+            <li><a @click="showDoneTodos" v-bind:class="{ 'active': visibility === 'done' }">已完成</a></li>
             <li class="project-select">
             <li class="dropdown">
               <span>选择项目</span>
@@ -81,18 +85,6 @@
         </footer>
       </section>
     </task>
-    <section id="share" style="display: none;">
-      <iframe src="" frameborder="0"></iframe>
-      <div class="share-box">
-        <form method="POST">
-          <textarea name="share-content" cols="30" rows="10"></textarea>
-          <div class="msg">分享成功！</div>
-          <div class="share-button">
-            <a class="button green">发泡</a>
-          </div>
-        </form>
-      </div>
-    </section>
     <footer id="footer">
       <div class="tabs-nav">
         <div class="tab-item" v-bind:class="{'active': currentView === 'projects'}" v-on:click="changeView('projects')">

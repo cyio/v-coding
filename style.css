@@ -681,8 +681,10 @@ label[for='toggle-all'] {
 
 .todo-list li {
     position: relative;
-    font-size: 18px;
+    font-size: 16px;
     border-bottom: 1px solid #ededed;
+    height: 32px;
+    line-height: 32px;
 }
 
 .todo-list li:last-child {
@@ -804,6 +806,7 @@ label[for='toggle-all'] {
 
 .filters>li {
     display: inline;
+    padding: 3px 0;
 }
 
 .filters li a {
@@ -913,19 +916,32 @@ html .clear-completed:active {
     text-align: left;
     max-height: 380px;
     list-style: none;
-    padding: 15px 10px;
+    padding: 15px 0;
     font-size: 14px;
 }
 
 .dropdown-item {
-    line-height: 22px;
+    line-height: 24px;
+    height: 24px;
+    text-indent: 1em;
 }
 .dropdown-item:hover {
     cursor: pointer;
+    background-color: #4db0f4;
+    color: #fff;
 }
 
 .dropdown:hover .dropdown-content {
     opacity: 1;
     z-index: 100;
     transition: opacity .3s
+}
+
+.filters .active {
+    background-color: #4db0f4;
+    color: #fff;
+}
+
+.placeholder {
+    text-align: center;
 }
