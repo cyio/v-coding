@@ -25,7 +25,7 @@ $(function() {
               'points_left': userData.points_left
             };            
           }
-          // self.$parent.$data.points_left = self.user.points_left
+          self.$parent.$data.points_left = self.user.points_left
         });
       },
       removeActivityCount: function () {
@@ -281,7 +281,7 @@ $(function() {
     el: '#app',
     data: {
       currentView: 'projects',
-      points_left: vCodingStorage.fetch().user.points_left||0
+      points_left: 0
     },
     methods: {
       changeView: function (view) {
