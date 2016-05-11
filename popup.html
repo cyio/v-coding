@@ -69,9 +69,9 @@
             共 <strong>{{ todosCount }}</strong> 项
           </span>
           <ul class="filters">
-            <li><a @click="showAllTodos" v-bind:class="{ 'active': visibility === 'all' }">全部</a></li>            
             <li><a @click="showProcessingTodos" v-bind:class="{ 'active': visibility === 'processing' }">进行中</a></li>
             <li><a @click="showDoneTodos" v-bind:class="{ 'active': visibility === 'done' }">已完成</a></li>
+            <li><a @click="showAllTodos" v-bind:class="{ 'active': visibility === 'all' }">全部</a></li>            
             <li class="project-select">
             <li class="dropdown">
               <span>选择项目</span>

@@ -122,7 +122,7 @@ $(function() {
 				todos: [],
         newTodo: '',
         editedTodo: null,
-        visibility: 'all',
+        visibility: 'processing',
         showLists: false,
         showProjectMenu: false,
         projects: vCodingStorage.fetch().projects,
