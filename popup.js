@@ -128,13 +128,16 @@ $(function() {
         projects: vCodingStorage.fetch().projects,
         user: vCodingStorage.fetch().user,
         lastProjectID: localStorage.lastProjectID || null,
-        remainCount: 0
+        remainCount: 0,
+        todosCount: 0
       };
     },
     computed: {
       //当前显示的todos
       filterTodos: function(){
-        return filters[this.visibility](this.todos);
+        var todos = filters[this.visibility](this.todos)
+        this.todosCount = todos.length
+        return todos;
       },
       //没有完成的todo
       remaining: function(){

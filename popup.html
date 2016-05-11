@@ -66,7 +66,7 @@
         </section>
         <footer class="footer">
           <span class="todo-count">
-            共 <strong>{{ filterTodos.length }}</strong> 项
+            共 <strong>{{ todosCount }}</strong> 项
           </span>
           <ul class="filters">
             <li><a @click="showAllTodos" v-bind:class="{ 'active': visibility === 'all' }">全部</a></li>            
