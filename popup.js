@@ -88,7 +88,9 @@ $(function() {
           });
           
           vCodingStorage.save(self.$data)
-        })
+				}, function(error){
+					 chrome.tabs.create({url: "https://coding.net/login"});
+				})
       }
     },
     ready: function() {
