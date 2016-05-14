@@ -71,7 +71,7 @@ $(function() {
                   })
                   resolve(self.projects);
                 } else {
-                  reject('请前往登陆')
+                  reject()
                 }
               });            
             }
@@ -138,6 +138,7 @@ $(function() {
       //当前显示的todos
       filterTodos: function(){
         var todos = filters[this.visibility](this.todos)
+        console.log(this.visibility)
         this.todosCount = todos.length
         return todos;
       },
@@ -259,30 +260,6 @@ $(function() {
       if (this.lastProjectID) {
         this.loadTodos(self.lastProjectID)
       }
-      // $(document).not(".project-select").click(function() {
-      //   if (self.showProjectMenu) {
-      //     self.showProjectMenu = false
-      //   }
-      // });
-
-      // CodingAPI.task.create('212938', '20203', this.todos[0], function (result) {
-      //   console.log(result)
-      //   if (result.code === 0) {
-      //     // result.data.id
-      //   }
-      // });
-      // CodingAPI.task.delete('212938', '584381', function (result) {
-      //   console.log(result)
-      //   if (result.code === 0) {
-      //     // result.data.id
-      //   }
-      // });
-      // CodingAPI.task.finish('212938', 'cyio', '584388', function (result) {
-      //   // console.log(result)
-      //   if (result.code === 0) {
-      //     // result.data.id
-      //   }
-      // });
     }
   });
   
