@@ -6,11 +6,11 @@
   <title>v-coding</title>
   <!-- <link rel="stylesheet" type="text/css" href="font-awesome.min.css">   -->
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="text/javascript" src="zepto.min.js"></script>
-  <script type="text/javascript" src="api.js"></script>
-  <script type="text/javascript" src="vue.min.js"></script>
-  <script type="text/javascript" src="store.js"></script>
-  <script type="text/javascript" src="vue-resource.min.js"></script>
+  <script type="text/javascript" src="/libs/zepto.min.js"></script>
+  <script type="text/javascript" src="/libs/vue.min.js"></script>
+  <script type="text/javascript" src="/libs/vue-resource.min.js"></script>
+  <script type="text/javascript" src="/libs/store.js"></script>
+  <script type="text/javascript" src="/libs/api.js"></script>
   <script type="text/javascript" src="popup.js"></script>
 </head>
 
@@ -21,10 +21,10 @@
         <div class="quick-toolbar">
           <input class="search-projects" autofocus="autofocus" v-model="name">
           <div class="toolbar-item refresh-projects" id="refresh-projects" v-on:click="loadProjects">
-            <svg aria-hidden="true" class="octicon octicon-sync" height="16" version="1.1" viewBox="0 0 16 16" width="16" fill="green"><path d="M10.24 7.4c0.19 1.28-0.2 2.62-1.2 3.6-1.47 1.45-3.74 1.63-5.41 0.54l1.17-1.14L0.5 9.8 1.1 14l1.31-1.26c2.36 1.74 5.7 1.57 7.84-0.54 1.24-1.23 1.81-2.85 1.74-4.46L10.24 7.4zM2.96 5c1.47-1.45 3.74-1.63 5.41-0.54l-1.17 1.14 4.3 0.6L10.9 2l-1.31 1.26C7.23 1.52 3.89 1.69 1.74 3.8 0.5 5.03-0.06 6.65 0.01 8.26l1.75 0.35C1.57 7.33 1.96 5.98 2.96 5z"></path></svg>
+            <img src="/images/sync.svg">
           </div>
           <div class="toolbar-item remove-activity-update-count" id=" " v-on:click="removeActivityCount" title="清除提醒">
-            <svg aria-hidden="true" class="octicon octicon-trashcan" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M10 2H8c0-0.55-0.45-1-1-1H4c-0.55 0-1 0.45-1 1H1c-0.55 0-1 0.45-1 1v1c0 0.55 0.45 1 1 1v9c0 0.55 0.45 1 1 1h7c0.55 0 1-0.45 1-1V5c0.55 0 1-0.45 1-1v-1c0-0.55-0.45-1-1-1z m-1 12H2V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9z m1-10H1v-1h9v1z"></path></svg>
+            <img src="/images/trashcan.svg">
           </div>
           <div class="username" v-if="user.name"><a tabindex="-1" href="{{baseUrl + '/user'}}" title="个人中心" target="blank">{{user.name}}</a></div>
         </div>
@@ -32,13 +32,12 @@
           <div class="project" v-for="project in projects | filterBy name in 'name'">
             <a class="avatar" href="{{baseUrl + project.path}}" target="_blank">
               <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
-              <span class="name">{{project.name}}</span><svg v-if="project.isPrivate" aria-hidden="true" class="octicon octicon-lock" height="16" version="1.1" viewBox="0 0 16 16" width="12"><path d="M4 13h-1v-1h1v1z m8-6v7c0 0.55-0.45 1-1 1H1c-0.55 0-1-0.45-1-1V7c0-0.55 0.45-1 1-1h1V4C2 1.8 3.8 0 6 0s4 1.8 4 4v2h1c0.55 0 1 0.45 1 1z m-8.2-1h4.41V4c0-1.22-0.98-2.2-2.2-2.2s-2.2 0.98-2.2 2.2v2z m7.2 1H2v7h9V7z m-7 1h-1v1h1v-1z m0 2h-1v1h1v-1z"></path></svg>
+              <span class="name">{{project.name}}</span><img src="/images/lock.svg">
             </a>
-            <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><svg aria-hidden="true" class="octicon octicon-history" height="16" version="1.1" viewBox="0 0 14 16" width="14">
-  <path d="M9.5 3l-1.5 1.5 3.5 3.5L8 11.5l1.5 1.5 4.5-5L9.5 3zM4.5 3L0 8l4.5 5 1.5-1.5L2.5 8l3.5-3.5L4.5 3z" /></svg></a>
-            <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><svg aria-hidden="true" class="octicon octicon-history" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path d="M8 13H6V6h5v2H8v5zM7 1c-2.19 0-4.13 1.02-5.41 2.59L0 2v4h4l-1.5-1.5c1.05-1.33 2.67-2.2 4.5-2.2 3.14 0 5.7 2.56 5.7 5.7S10.14 13.7 7 13.7 1.3 11.14 1.3 8c0-0.34 0.03-0.67 0.09-1H0.08c-0.05 0.33-0.08 0.66-0.08 1 0 3.86 3.14 7 7 7s7-3.14 7-7S10.86 1 7 1z"></path></svg></a>
-            <a class="project-link" title="项目任务" v-if="project.isPrivate" href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><svg aria-hidden="true" class="octicon octicon-taskslist" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M15.41 9H7.59c-0.59 0-0.59-0.41-0.59-1s0-1 0.59-1h7.81c0.59 0 0.59 0.41 0.59 1s0 1-0.59 1zM9.59 4c-0.59 0-0.59-0.41-0.59-1s0-1 0.59-1h5.81c0.59 0 0.59 0.41 0.59 1s0 1-0.59 1H9.59zM0 3.91l1.41-1.3 1.59 1.59L7.09 0l1.41 1.41-5.5 5.5L0 3.91z m7.59 8.09h7.81c0.59 0 0.59 0.41 0.59 1s0 1-0.59 1H7.59c-0.59 0-0.59-0.41-0.59-1s0-1 0.59-1z" /></path></svg></a>
-            <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><svg aria-hidden="true" class="octicon octicon-git-pull-request" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path d="M11 11.28c0-1.73 0-6.28 0-6.28-0.03-0.78-0.34-1.47-0.94-2.06s-1.28-0.91-2.06-0.94c0 0-1.02 0-1 0V0L4 3l3 3V4h1c0.27 0.02 0.48 0.11 0.69 0.31s0.3 0.42 0.31 0.69v6.28c-0.59 0.34-1 0.98-1 1.72 0 1.11 0.89 2 2 2s2-0.89 2-2c0-0.73-0.41-1.38-1-1.72z m-1 2.92c-0.66 0-1.2-0.55-1.2-1.2s0.55-1.2 1.2-1.2 1.2 0.55 1.2 1.2-0.55 1.2-1.2 1.2zM4 3c0-1.11-0.89-2-2-2S0 1.89 0 3c0 0.73 0.41 1.38 1 1.72 0 1.55 0 5.56 0 6.56-0.59 0.34-1 0.98-1 1.72 0 1.11 0.89 2 2 2s2-0.89 2-2c0-0.73-0.41-1.38-1-1.72V4.72c0.59-0.34 1-0.98 1-1.72z m-0.8 10c0 0.66-0.55 1.2-1.2 1.2s-1.2-0.55-1.2-1.2 0.55-1.2 1.2-1.2 1.2 0.55 1.2 1.2z m-1.2-8.8c-0.66 0-1.2-0.55-1.2-1.2s0.55-1.2 1.2-1.2 1.2 0.55 1.2 1.2-0.55 1.2-1.2 1.2z"></path></svg></a>
+            <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
+            <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
+            <a class="project-link" title="项目任务" v-if="project.isPrivate" href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a>
+            <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>
           </div>
         </div>
       </section>
