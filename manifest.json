@@ -9,8 +9,6 @@
     },
     "background": {
         "scripts": [
-            "zepto.min.js",
-            "api.js",
             "background.js"
         ],
         "persistent": false

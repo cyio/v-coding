@@ -99,24 +99,6 @@ $(function() {
 
     }
   })
-  // all 全部
-  // processing 正在进行
-  // done 完成
-  var filters = {
-    all: function (todos) {
-      return todos;
-    },
-    processing: function (todos) {
-      return todos.filter(function (todo) {
-        return !todo.status;
-      });
-    },
-    done: function (todos) {
-      return todos.filter(function (todo) {
-        return todo.status;
-      });
-    }
-  };
 
   Vue.component('task', {
     data: function() {
@@ -131,18 +113,10 @@ $(function() {
         user: vCodingStorage.fetch().user,
         lastProjectID: localStorage.lastProjectID || null,
         remainCount: 0,
-        todosCount: 0
+        todosCount: 0        
       };
     },
     computed: {
-      //当前显示的todos
-      filterTodos: function(){
-        var todos = filters[this.visibility](this.todos)
-        console.log(this.visibility)
-        this.todosCount = todos.length
-        return todos;
-      },
-      //没有完成的todo
       remaining: function(){
         return filters.processing(this.todos);
       },
@@ -157,6 +131,21 @@ $(function() {
             todo.done = value;
           });
         }
+      }
+    },
+    filters: {
+      all: function (todos) {
+        return todos;
+      },
+      processing: function (todos) {
+        return todos.filter(function (todo) {
+          return !todo.status;
+        });
+      },
+      done: function (todos) {
+        return todos.filter(function (todo) {
+          return todo.status;
+        });
       }
     },
     methods: {
@@ -250,6 +239,22 @@ $(function() {
       //显示已完成的todos
       showDoneTodos: function(){
         this.visibility = 'done';
+      },
+      filterTodos: function() {
+        var todos = this.todos
+        if (this.visibility === 'all') {
+          return todos;
+        } else if (this.visibility === 'processing') {
+          return todos.filter(function (todo) {
+            return !todo.status;
+          });
+        } else {
+          return todos.filter(function (todo) {
+            return todo.status;
+          });
+        }
+        
+        this.todosCount = todos.length
       },
       debug: function (i) {
         console.log(this.todos[i].status)
