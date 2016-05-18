@@ -909,14 +909,13 @@ html .clear-completed:active {
     bottom: 0;
     right: 0;
     background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    // border: 1px solid #b5b6b5;
+    min-width: 150px;
+    border: 1px solid #b5b6b5;
     overflow: scroll;
     text-align: left;
     max-height: 380px;
     list-style: none;
-    padding: 15px 0;
+    padding: 10px 0;
     font-size: 14px;
 }
 

@@ -96,7 +96,6 @@ $(function() {
     ready: function() {
       this.getUser();
       this.loadProjects();
-
     }
   })
 
@@ -112,14 +111,10 @@ $(function() {
         projects: vCodingStorage.fetch().projects,
         user: vCodingStorage.fetch().user,
         lastProjectID: localStorage.lastProjectID || null,
-        remainCount: 0,
-        todosCount: 0        
+        todosCount: 0
       };
     },
     computed: {
-      remaining: function(){
-        return filters.processing(this.todos);
-      },
       allDone: {
         get: function () {
           console.log('get alldone')  
@@ -131,21 +126,6 @@ $(function() {
             todo.done = value;
           });
         }
-      }
-    },
-    filters: {
-      all: function (todos) {
-        return todos;
-      },
-      processing: function (todos) {
-        return todos.filter(function (todo) {
-          return !todo.status;
-        });
-      },
-      done: function (todos) {
-        return todos.filter(function (todo) {
-          return todo.status;
-        });
       }
     },
     methods: {
@@ -196,10 +176,8 @@ $(function() {
               }
               
               getTodos().then(function(result){
-                // if (result.length === 0) return
-                // console.log('not return')
-                // self.showLists = true
                 result.length === 0 ? self.showLists = false : self.showLists = true
+                self.setTodosCount()
               })
       },
       toggleTodo: function (index) {
@@ -217,7 +195,6 @@ $(function() {
         }
         CodingAPI.task.create(this.currentProject.id, this.user.id, content, function (result) {
           if (result.code === 0) {
-            console.log('添加成功')
             self.loadTodos(self.currentProject.id)
             self.newTodo = '';
           }
@@ -231,17 +208,21 @@ $(function() {
       //显示所有todos
       showAllTodos: function(){
         this.visibility = 'all';
+        this.setTodosCount()
       },
       //显示未完成的todos
       showProcessingTodos: function(){
-        this.visibility = 'processing';
+        this.visibility = 'processing'
+        this.setTodosCount();
       },
       //显示已完成的todos
       showDoneTodos: function(){
         this.visibility = 'done';
+        this.setTodosCount()
       },
-      filterTodos: function() {
+      filterTodos: function() {      
         var todos = this.todos
+        if (!todos) return
         if (this.visibility === 'all') {
           return todos;
         } else if (this.visibility === 'processing') {
@@ -253,11 +234,9 @@ $(function() {
             return todo.status;
           });
         }
-        
-        this.todosCount = todos.length
       },
-      debug: function (i) {
-        console.log(this.todos[i].status)
+      setTodosCount: function() {
+        this.todosCount = this.filterTodos().length
       }
     },
     ready: function () {
