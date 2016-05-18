@@ -32,7 +32,7 @@
           <div class="project" v-for="project in projects | filterBy name in 'name'">
             <a class="avatar" href="{{baseUrl + project.path}}" target="_blank">
               <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
-              <span class="name">{{project.name}}</span><img src="/images/lock.svg">
+              <span class="name">{{project.name}}</span><img v-if="project.isPrivate" src="/images/lock.svg">
             </a>
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
             <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
@@ -62,7 +62,8 @@
         </section>
         <section class="placeholder" v-else>
           <h3 v-if="!lastProjectID">尚未选择项目</h3>
-          <h3 v-else>此项目暂无任务</h3>
+          <div v-show="lastProjectID && loading" class="preloader"></div>
+          <h3 v-if="!loading && !showLists">此项目暂无任务</h3>
         </section>
         <footer class="footer">
           <span class="todo-count">

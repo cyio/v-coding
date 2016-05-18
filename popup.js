@@ -108,6 +108,7 @@ $(function() {
         visibility: 'processing',
         showLists: false,
         showProjectMenu: false,
+        loading: true,
         projects: vCodingStorage.fetch().projects,
         user: vCodingStorage.fetch().user,
         lastProjectID: localStorage.lastProjectID || null,
@@ -135,6 +136,7 @@ $(function() {
               var user = this.projects[0].user
               self.todos.length = 0
               self.showLists = false
+              self.loading = true
               
               var getTodos = function () {
                 return new Promise (
@@ -178,6 +180,7 @@ $(function() {
               getTodos().then(function(result){
                 result.length === 0 ? self.showLists = false : self.showLists = true
                 self.setTodosCount()
+                self.loading = false
               })
       },
       toggleTodo: function (index) {
