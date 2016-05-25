@@ -1,6 +1,4 @@
-$(function() {
-  'use strict';
-
+$(() => {
   Vue.component('projects', {
     data() {
       return {
@@ -13,10 +11,10 @@ $(function() {
     computed: {},
     methods: {
       getUser() {
-        let self = this
-        CodingAPI.me(function(result) {
+        const self = this;
+        CodingAPI.me(result => {
           if (!result.code) {
-            let userData = result.data;
+            const userData = result.data;
             self.user = {
               'name': userData.name,
               'id': userData.id,
@@ -29,12 +27,10 @@ $(function() {
         });
       },
       removeActivityCount() {
-        let self = this
-        let ids = $.map(this.notificationUnreadProjects, function(project) {
-          return project.id;
-        });
-        CodingAPI.removeCount(ids, function() {
-          $.each(self.projects, function(i, project) {
+        const self = this;
+        const ids = $.map(this.notificationUnreadProjects, project => project.id);
+        CodingAPI.removeCount(ids, () => {
+          $.each(self.projects, (i, project) => {
             project.activityUpdateCount = 0;
           });
           self.notificationUnreadProjects = [];
@@ -45,44 +41,42 @@ $(function() {
         });
       },
       loadProjects() {
-        let self = this
+        const self = this;
 
-        let getProjects = function() {
-          return new Promise(
-            function(resolve, reject) {
-              CodingAPI.projects('all', function(result) {
-                let projects = result;
+        const getProjects = () => new Promise(
+          (resolve, reject) => {
+            CodingAPI.projects('all', result => {
+              const projects = result;
 
-                if (!projects.code) {
-                  // console.log(projects)
-                  self.projects = $.map(projects, function(project) {
-                    if (!!project.un_read_activities_count) {
-                      self.notificationUnreadProjects.push(project);
-                    }
-                    return {
-                      'user': project.owner_user_name,
-                      'path': project.project_path,
-                      'icon': project.icon,
-                      'name': project.name,
-                      'id': project.id,
-                      'https_url': project.https_url,
-                      'ssh_url': project.ssh_url,
-                      'isPrivate': !project.is_public,
-                      'activityUpdateCount': project.un_read_activities_count || 0
-                    };
-                  })
-                  resolve(self.projects);
-                } else {
-                  reject()
-                }
-              });
-            }
-          )
-        }
+              if (!projects.code) {
+                // console.log(projects)
+                self.projects = $.map(projects, project => {
+                  if (!!project.un_read_activities_count) {
+                    self.notificationUnreadProjects.push(project);
+                  }
+                  return {
+                    'user': project.owner_user_name,
+                    'path': project.project_path,
+                    'icon': project.icon,
+                    'name': project.name,
+                    'id': project.id,
+                    'https_url': project.https_url,
+                    'ssh_url': project.ssh_url,
+                    'isPrivate': !project.is_public,
+                    'activityUpdateCount': project.un_read_activities_count || 0
+                  };
+                })
+                resolve(self.projects);
+              } else {
+                reject()
+              }
+            });
+          }
+        );
 
-        getProjects().then(function(projects) {
-          $.each(projects, function(i, val) {
-            self.$http.get(`https://coding.net/api/user/${projects[i].user}/project/${projects[i].name}/git/branches`, function(result, status, request) {
+        getProjects().then(projects => {
+          $.each(projects, (i, val) => {
+            self.$http.get(`https://coding.net/api/user/${projects[i].user}/project/${projects[i].name}/git/branches`, (result, status, request) => {
               if (status == 200 && result.code === 0) {
                 projects[i].default_branch = result.data.list[0].name
               }
@@ -90,7 +84,7 @@ $(function() {
           });
 
           vCodingStorage.save(self.$data)
-        }, function(error) {
+        }, error => {
           chrome.tabs.create({
             url: "https://coding.net/login"
           });
@@ -127,7 +121,7 @@ $(function() {
         },
         set(value) {
           console.log('set alldone');
-          this.todos.forEach(function(todo) {
+          this.todos.forEach(todo => {
             todo.done = value;
           });
         }
@@ -136,52 +130,50 @@ $(function() {
     methods: {
       loadTodos(projectID) {
         // console.log(projectID)
-        let self = this
-        let user = this.projects[0].user
+        const self = this;
+        const user = this.projects[0].user;
         self.todos.length = 0
         self.showLists = false
         self.loading = true
 
-        let getTodos = function() {
-          return new Promise(
-            function(resolve, reject) {
-              CodingAPI.task.list(projectID, user, 'all', function(result) {
-                if (!result.code) {
-                  if (result.data.list.length > 0) {
-                    $.each(result.data.list, function(i, val) {
-                      let task = result.data.list[i];
-                      // console.log(task)
-                      let status;
-                      if (task.status === 1) {
-                        status = false
-                      } else {
-                        status = true
+        const getTodos = () => new Promise(
+          (resolve, reject) => {
+            CodingAPI.task.list(projectID, user, 'all', result => {
+              if (!result.code) {
+                if (result.data.list.length > 0) {
+                  $.each(result.data.list, (i, val) => {
+                    const task = result.data.list[i];
+                    // console.log(task)
+                    let status;
+                    if (task.status === 1) {
+                      status = false
+                    } else {
+                      status = true
+                    }
+                    self.todos[i] = {
+                      id: task.id,
+                      title: task.content,
+                      status,
+                      project: {
+                        id: task.project.id,
+                        name: task.project.name
                       }
-                      self.todos[i] = {
-                        id: task.id,
-                        title: task.content,
-                        status: status,
-                        project: {
-                          id: task.project.id,
-                          name: task.project.name
-                        }
-                      }
+                    }
 
-                      self.currentProject = self.todos[i].project
-                      localStorage.lastProjectID = self.currentProject.id
-                    })
-                  }
-
-                  resolve(self.todos);
-                } else {
-                  reject('fail')
+                    self.currentProject = self.todos[i].project
+                    localStorage.lastProjectID = self.currentProject.id
+                  })
                 }
-              });
-            }
-          )
-        }
 
-        getTodos().then(function(result) {
+                resolve(self.todos);
+              } else {
+                reject('fail')
+              }
+            });
+          }
+        );
+
+        getTodos().then(result => {
           result.length === 0 ? self.showLists = false : self.showLists = true
           self.setTodosCount()
           self.loading = false
@@ -191,15 +183,15 @@ $(function() {
         let status;
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status ? status = 2 : status = 1
-        CodingAPI.task.toggle(this.todos[index].project.name, this.projects[0].user, this.todos[index].id, status, function(result) {})
+        CodingAPI.task.toggle(this.todos[index].project.name, this.projects[0].user, this.todos[index].id, status, result => {})
       },
       addTodo() {
-        let self = this
-        let content = this.newTodo && this.newTodo.trim();
+        const self = this;
+        const content = this.newTodo && this.newTodo.trim();
         if (!content) {
           return false;
         }
-        CodingAPI.task.create(this.currentProject.id, this.user.id, content, function(result) {
+        CodingAPI.task.create(this.currentProject.id, this.user.id, content, result => {
           if (result.code === 0) {
             self.loadTodos(self.currentProject.id)
             self.newTodo = '';
@@ -207,7 +199,7 @@ $(function() {
         })
       },
       deleteTodo(todoID) {
-        CodingAPI.task.delete(this.currentProject.id, todoID, function(result) {
+        CodingAPI.task.delete(this.currentProject.id, todoID, result => {
           console.log(result)
         })
       },
@@ -227,18 +219,14 @@ $(function() {
         this.setTodosCount()
       },
       filterTodos() {
-        let todos = this.todos
+        const todos = this.todos;
         if (!todos) return
         if (this.visibility === 'all') {
           return todos;
         } else if (this.visibility === 'processing') {
-          return todos.filter(function(todo) {
-            return !todo.status;
-          });
+          return todos.filter(todo => !todo.status);
         } else {
-          return todos.filter(function(todo) {
-            return todo.status;
-          });
+          return todos.filter(todo => todo.status);
         }
       },
       setTodosCount() {
@@ -246,7 +234,7 @@ $(function() {
       }
     },
     ready() {
-      let self = this
+      const self = this;
       if (this.lastProjectID) {
         this.loadTodos(self.lastProjectID)
       }
