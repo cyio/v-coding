@@ -1,4 +1,31 @@
 $(() => {
+  'use strict';
+  
+  window.store = {
+    state: {
+      user: {},
+      projects: {},
+      lastProjectID: null
+    },
+    init () {      
+    },
+    setLastProjectID (id) {
+      this.state.lastProjectID = id
+      ls.setItem('lastProjectID', id)
+    },
+    getLastProjectID () {
+      return ls.getItem('lastProjectID')
+    },
+    setUser (data) {
+      this.state.user = data
+      ls.setItem('user', data)
+    },
+    setProjects (data) {
+      this.state.projects = data
+      ls.setItem('projects', data)
+    }
+  }
+
   Vue.component('projects', {
     data() {
       return {
@@ -21,7 +48,8 @@ $(() => {
               'avatar': userData.avatar,
               'path': userData.path,
               'points_left': userData.points_left
-            };
+            }
+            window.store.setUser(self.user)
           }
           self.$parent.$data.points_left = self.user.points_left
         });
@@ -83,12 +111,15 @@ $(() => {
             });
           });
 
-          vCodingStorage.save(self.$data)
+          window.store.setProjects(projects)
         }, error => {
           chrome.tabs.create({
             url: "https://coding.net/login"
           });
         })
+      },
+      openTodo (id) {
+        this.$dispatch('getProjectID', id)
       }
     },
     ready() {
@@ -107,10 +138,8 @@ $(() => {
         showLists: false,
         showProjectMenu: false,
         loading: true,
-        projects: vCodingStorage.fetch().projects,
-        user: vCodingStorage.fetch().user,
-        lastProjectID: localStorage.lastProjectID || null,
-        todosCount: 0
+        todosCount: 0,
+        publicState: window.store.state
       };
     },
     computed: {
@@ -129,9 +158,9 @@ $(() => {
     },
     methods: {
       loadTodos(projectID) {
-        // console.log(projectID)
-        const self = this;
-        const user = this.projects[0].user;
+        // console.log(ProjectID)
+        const self = this
+        const user = this.publicState.projects[0].user
         self.todos.length = 0
         self.showLists = false
         self.loading = true
@@ -161,10 +190,10 @@ $(() => {
                     }
 
                     self.currentProject = self.todos[i].project
-                    localStorage.lastProjectID = self.currentProject.id
+                    window.store.setLastProjectID(self.currentProject.id)
                   })
                 }
-
+                
                 resolve(self.todos);
               } else {
                 reject('fail')
@@ -183,7 +212,7 @@ $(() => {
         let status;
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status ? status = 2 : status = 1
-        CodingAPI.task.toggle(this.todos[index].project.name, this.projects[0].user, this.todos[index].id, status, result => {})
+        CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {})
       },
       addTodo() {
         const self = this;
@@ -191,7 +220,7 @@ $(() => {
         if (!content) {
           return false;
         }
-        CodingAPI.task.create(this.currentProject.id, this.user.id, content, result => {
+        CodingAPI.task.create(this.currentProject.id, this.publicState.user.id, content, result => {
           if (result.code === 0) {
             self.loadTodos(self.currentProject.id)
             self.newTodo = '';
@@ -233,11 +262,18 @@ $(() => {
         this.todosCount = this.filterTodos().length
       }
     },
-    ready() {
-      const self = this;
-      if (this.lastProjectID) {
-        this.loadTodos(self.lastProjectID)
+    events: {
+      showTodo (id) {
+        console.log('todo ' + id)
+        this.loadTodos(id)      
       }
+    },
+    ready() {
+      const self = this
+      this.loadTodos(this.publicState.lastProjectID)
+      // if (this.lastProjectID) {
+      //   this.loadTodos(self.lastProjectID)
+      // }
     }
   });
 
@@ -245,11 +281,18 @@ $(() => {
     el: '#app',
     data: {
       currentView: 'projects',
-      points_left: 0
+      points_left: 0,
+      publicState: window.store.state
     },
     methods: {
       changeView(view) {
         this.currentView = view
+      }
+    },
+    events: {
+      getProjectID (id) {
+        this.currentView = 'task'
+        window.store.setLastProjectID(id)
       }
     }
   })
