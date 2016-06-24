@@ -5,7 +5,8 @@ $(() => {
     state: {
       user: {},
       projects: {},
-      lastProjectID: null
+      lastProjectID: null,
+      currentView: 'projects'
     },
     init () {      
     },
@@ -23,6 +24,12 @@ $(() => {
     setProjects (data) {
       this.state.projects = data
       ls.setItem('projects', data)
+    },
+    setCurrentView (view) {
+      this.state.currentView = view
+    },
+    getCurrentView () {
+      return this.state.currentView
     }
   }
 
@@ -260,6 +267,9 @@ $(() => {
       },
       setTodosCount() {
         this.todosCount = this.filterTodos().length
+      },
+      goBack () {
+        window.store.setCurrentView('projects')
       }
     },
     events: {
@@ -280,18 +290,14 @@ $(() => {
   new Vue({
     el: '#app',
     data: {
-      currentView: 'projects',
       points_left: 0,
       publicState: window.store.state
     },
     methods: {
-      changeView(view) {
-        this.currentView = view
-      }
     },
     events: {
       getProjectID (id) {
-        this.currentView = 'task'
+        this.publicState.currentView = 'task'
         window.store.setLastProjectID(id)
       }
     }

@@ -262,7 +262,11 @@ body.dimmer:before {
   position: relative;
 }
 
-#projects .quick-toolbar {
+#projects .project:first-child {
+  border-top: 1px solid #EEE;
+}
+
+#projects .navbar {
   border-bottom: 1px solid #F5EEEE;
 }
 
@@ -460,11 +464,11 @@ body.dimmer:before {
 
 /* project quick toolbar */
 
-#projects .quick-toolbar {
+#projects .navbar {
   position: relative;
 }
 
-#projects .quick-toolbar .toolbar-item {
+#projects .navbar .toolbar-item {
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -478,27 +482,27 @@ body.dimmer:before {
   margin-right: 6px;
 }
 
-#projects .quick-toolbar .toolbar-item.loading {
+#projects .navbar .toolbar-item.loading {
   font-size: 20px;
 }
 
 
-/*#projects .quick-toolbar .toolbar-item:hover{
+/*#projects .navbar .toolbar-item:hover{
     background: #EEE;
 }
 */
 
-#projects .quick-toolbar .toolbar-item.remove-activity-update-count {
+#projects .navbar .toolbar-item.remove-activity-update-count {
   font-size: 20px;
   color: #9B9B9B;
 }
 
-#projects .quick-toolbar .toolbar-item.remove-activity-update-count .update-count-tip {
+#projects .navbar .toolbar-item.remove-activity-update-count .update-count-tip {
   top: 0;
   right: -10px;
 }
 
-#projects .quick-toolbar .toolbar-item.refresh-projects {
+#projects .navbar .toolbar-item.refresh-projects {
   font-size: 18px;
 }
 
@@ -515,6 +519,8 @@ body.dimmer:before {
 
 #projects #project-list {
   height: 380px;
+  padding-bottom: 5px;
+  padding-top: 5px;
   overflow-y: scroll;
   overflow-x: hidden;
 }

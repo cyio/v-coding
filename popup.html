@@ -16,9 +16,9 @@
 
 <body>
   <div id="app" class="container">
-    <projects inline-template v-if="currentView === 'projects'">
+    <projects inline-template v-if="publicState.currentView === 'projects'">
       <section id="projects" class="tab-page">
-        <div class="navbar quick-toolbar">
+        <div class="navbar">
           <input class="search-projects" autofocus="autofocus" v-model="name">
           <div class="navbar-buttons">
             <div class="toolbar-item refresh-projects" id="refresh-projects" v-on:click="loadProjects">
@@ -45,8 +45,12 @@
         </div>
       </section>
     </projects>
-    <task inline-template v-if="currentView === 'task'">
+    <task inline-template v-if="publicState.currentView === 'task'">
       <section class="todoapp tab-page">
+        <div class="navbar">
+          <div class="back" @click="goBack">返回</div>
+          <div class="project-title"></div>
+        </div>
         <header class="header">
           <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
         </header>
@@ -83,19 +87,19 @@
         </footer>
       </section>
     </task>
-    <footer id="footer">
+<!--     <footer id="footer">
       <div class="tabs-nav">
-        <div class="tab-item" v-bind:class="{'active': currentView === 'projects'}" v-on:click="changeView('projects')">
+        <div class="tab-item" v-bind:class="{'active': publicState.currentView === 'projects'}" v-on:click="changeView('projects')">
           项目
         </div>
-        <div class="tab-item" v-bind:class="{'active': currentView === 'task'}" v-on:click="changeView('task')">
+        <div class="tab-item" v-bind:class="{'active': publicState.currentView === 'task'}" v-on:click="changeView('task')">
           任务
         </div>
         <div class="tab-item points-left" data-target="">
           <a href="https://coding.net/user/account/credit" target="blank">MB: {{points_left}}</a>
         </div>
       </div>
-    </footer>
+    </footer> -->
   </div>
 </body>
 </body>
