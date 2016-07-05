@@ -38,7 +38,7 @@
             </a>
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
             <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
-            <a class="project-link" title="项目任务" v-if="project.isPrivate" @click="openTodo(project.id)"><img src="images/tasklist.svg"></a>
+            <a class="project-link" title="项目任务" v-if="project.isPrivate" @click="openTodo(project.id, project.name)"><img src="images/tasklist.svg"></a>
             <a class="project-link" title="项目任务" v-if="project.isPrivate" href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a>
             <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>            
           </div>

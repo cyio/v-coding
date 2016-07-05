@@ -5,17 +5,20 @@ $(() => {
     state: {
       user: {},
       projects: {},
-      lastProjectID: null,
+      lastProject: null,
       currentView: 'projects'
     },
     init () {      
     },
-    setLastProjectID (id) {
-      this.state.lastProjectID = id
-      ls.setItem('lastProjectID', id)
+    setLastProject (id, name) {
+      this.state.lastProject = {
+        id: id,
+        name: name
+      }
+      ls.setItem('lastProject', this.state.lastProject)
     },
-    getLastProjectID () {
-      return ls.getItem('lastProjectID')
+    getLastProject () {
+      return ls.getItem('lastProject')
     },
     setUser (data) {
       this.state.user = data
@@ -125,8 +128,8 @@ $(() => {
           });
         })
       },
-      openTodo (id) {
-        this.$dispatch('getProjectID', id)
+      openTodo (id, name) {
+        this.$dispatch('getLastProject', id, name)
       }
     },
     ready() {
@@ -197,7 +200,7 @@ $(() => {
                     }
 
                     self.currentProject = self.todos[i].project
-                    window.store.setLastProjectID(self.currentProject.id)
+                    window.store.setLastProject(self.currentProject.id, self.currentProject.name)
                   })
                 }
                 
@@ -273,14 +276,10 @@ $(() => {
       }
     },
     events: {
-      showTodo (id) {
-        console.log('todo ' + id)
-        this.loadTodos(id)      
-      }
     },
     ready() {
       const self = this
-      this.loadTodos(this.publicState.lastProjectID)
+      this.loadTodos(this.publicState.lastProject.id)
       // if (this.lastProjectID) {
       //   this.loadTodos(self.lastProjectID)
       // }
@@ -296,9 +295,9 @@ $(() => {
     methods: {
     },
     events: {
-      getProjectID (id) {
+      getLastProject (id, name) {
         this.publicState.currentView = 'task'
-        window.store.setLastProjectID(id)
+        window.store.setLastProject(id, name)
       }
     }
   })
