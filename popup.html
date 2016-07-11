@@ -38,7 +38,7 @@
             </a>
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
             <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
-            <a class="project-link" title="项目任务" v-if="project.isPrivate" @click="openTodo(project.id, project.name)"><img src="images/tasklist.svg"></a>
+            <a class="project-link" title="项目任务" @click="openTodo(project.id, project.name)"><img src="images/tasklist.svg"></a>
             <a class="project-link" title="项目任务" v-if="project.isPrivate" href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a>
             <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>            
           </div>
@@ -48,15 +48,19 @@
     <task inline-template v-if="publicState.currentView === 'task'">
       <section class="todoapp tab-page">
         <div class="navbar">
-          <div class="back" @click="goBack">返回</div>
-          <div class="project-title"></div>
+          <div class="left" @click="goBack">
+            <i class="icon icon-back"></i>
+            <span>返回</span>
+          </div>
+          <div class="center">{{publicState.lastProject.name}}</div>
+          <div class="right"></div>
         </div>
         <header class="header">
           <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
         </header>
-        <section class="main" v-if="showLists">
-          <input class="toggle-all" type="checkbox">
-          <ul class="todo-list">
+        <section class="main">
+          <!-- <input class="toggle-all" type="checkbox"> -->
+          <ul class="todo-list" v-if="showLists">
             <li class="todo" v-for="(index, todo) in filterTodos()">
               <div class="view">
                 <input class="toggle" type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
@@ -65,12 +69,9 @@
               </div>
               <input class="edit" type="text">
             </li>
+            <h3 v-if="todosCount === 0">暂无进行中任务</h3>
           </ul>
-        </section>
-        <section class="placeholder" v-else>
-          <h3 v-if="!publicState.lastProjectID">尚未选择项目</h3>
-          <div v-show="publicState.lastProjectID && loading" class="preloader"></div>
-          <h3 v-if="!loading && !showLists">此项目暂无任务</h3>
+          <div v-show="loading" class="preloader"></div>
         </section>
         <footer class="footer">
           <span class="todo-count">

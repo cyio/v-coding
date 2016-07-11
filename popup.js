@@ -225,21 +225,28 @@ $(() => {
         CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {})
       },
       addTodo() {
-        const self = this;
+        this.loading = true
+        const self = this
         const content = this.newTodo && this.newTodo.trim();
         if (!content) {
           return false;
         }
         CodingAPI.task.create(this.currentProject.id, this.publicState.user.id, content, result => {
-          if (result.code === 0) {
+          if (result.code === 0) {            
             self.loadTodos(self.currentProject.id)
-            self.newTodo = '';
+            self.newTodo = ''
+            self.loading = false
           }
         })
       },
       deleteTodo(todoID) {
+        this.loading = true
+        const self = this
         CodingAPI.task.delete(this.currentProject.id, todoID, result => {
-          console.log(result)
+          if (result.code === 0) {
+            self.loadTodos(self.currentProject.id)
+            self.loading = false
+          }
         })
       },
       //显示所有todos

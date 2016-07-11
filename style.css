@@ -569,6 +569,7 @@ body {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 12px;
 }
 
 .project-link {
@@ -589,7 +590,6 @@ input[type="checkbox"] {
 
 .todoapp {
   background: #fff;
-  width: 98%;
   position: relative;
 }
 
@@ -656,6 +656,9 @@ input[type="checkbox"] {
   position: relative;
   z-index: 2;
   border-top: 1px solid #e6e6e6;
+  height: 270px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 label[for='toggle-all'] {
@@ -699,7 +702,7 @@ label[for='toggle-all'] {
 }
 
 .todo-list li:last-child {
-  border-bottom: none;
+  // border-bottom: none;
 }
 
 .todo-list li.editing {
@@ -744,11 +747,13 @@ label[for='toggle-all'] {
 .todo-list li label {
   white-space: pre;
   word-break: break-word;
-  padding: 5px 40px 5px 5px;
+  padding: 5px;
   margin-left: 45px;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .todo-list li.completed label {
@@ -795,7 +800,6 @@ label[for='toggle-all'] {
   padding: 10px 15px;
   height: 20px;
   text-align: center;
-  border-top: 1px solid #e6e6e6;
 }
 
 .todo-count {
@@ -968,6 +972,12 @@ html .clear-completed:active {
   animation: preloader-spin 1s steps(12, end) infinite;
 }
 
+.main .preloader {
+  position: absolute;
+  left: 45%;
+  top: 30%;
+}
+
 .navbar,
 #footer {
   background: #f7f7f8;
@@ -978,6 +988,7 @@ html .clear-completed:active {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .navbar:after {
@@ -994,4 +1005,68 @@ html .clear-completed:active {
   z-index: 15;
   -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
+}
+
+i.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-style: normal;
+  position: relative;
+}
+
+i.icon.icon-back {
+  width: 12px;
+  height: 20px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2012%2020'%3E%3Cpath%20d%3D'M10%2C0l2%2C2l-8%2C8l8%2C8l-2%2C2L0%2C10L10%2C0z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
+}
+
+.navbar .center {
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 44px;
+  flex-shrink: 10;
+  padding: 0 10px;
+}
+
+.navbar .left,
+.navbar .right {
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  transform: translate3d(0, 0, 0);
+}
+
+.navbar .right {
+  width: 53px;
+}
+
+.navbar, .toolbar {
+  height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 17px;
+  position: relative;
+  margin: 0;
+  z-index: 500;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.navbar span {
+  margin-left: 7px
+}
+
+.todo-list h3 {
+  text-align: center;
+  margin-top: 30%;
 }
