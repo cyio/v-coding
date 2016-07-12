@@ -695,7 +695,7 @@ label[for='toggle-all'] {
 
 .todo-list li {
   position: relative;
-  font-size: 16px;
+  font-size: 14px;
   border-bottom: 1px solid #ededed;
   height: 32px;
   line-height: 32px;
@@ -770,17 +770,19 @@ label[for='toggle-all'] {
   width: 30px;
   height: 30px;
   margin: auto 0;
-  font-size: 30px;
+  font-size: 20px;
   color: #cc9a9a;
   transition: color 0.2s ease-out;
 }
 
 .todo-list li .destroy:hover {
-  color: #af5b5e;
+  color: red;
 }
 
 .todo-list li .destroy:after {
   content: '×';
+  border: 1px solid #c1c2c3;
+  border-radius: 3px;
 }
 
 .todo-list li:hover .destroy {

@@ -63,9 +63,8 @@
           <ul class="todo-list" v-if="showLists">
             <li class="todo" v-for="(index, todo) in filterTodos()">
               <div class="view">
-                <input class="toggle" type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
-                <label>{{ todo.title }}</label>
-                <button class="destroy" @click="deleteTodo(todo.id)"></button>
+                <input type="checkbox" v-model="todo.status" @click="toggleTodo(index)">{{ todo.title }}
+                <div class="destroy" @click="deleteTodo(todo.id)"></div>
               </div>
               <input class="edit" type="text">
             </li>
