@@ -765,7 +765,7 @@ label[for='toggle-all'] {
   display: none;
   position: absolute;
   top: 0;
-  right: 10px;
+  right: 25px;
   bottom: 0;
   width: 30px;
   height: 30px;
@@ -1071,4 +1071,9 @@ i.icon.icon-back {
 .todo-list h3 {
   text-align: center;
   margin-top: 30%;
+}
+
+.todo-list a.detail {
+  float: right;
+  padding-right: 5px;
 }

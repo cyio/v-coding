@@ -1,6 +1,6 @@
 $(() => {
   'use strict';
-  
+    
   window.store = {
     state: {
       user: {},
@@ -149,6 +149,7 @@ $(() => {
         showProjectMenu: false,
         loading: true,
         todosCount: 0,
+        baseUrl: "https://coding.net",
         publicState: window.store.state
       };
     },
@@ -182,7 +183,7 @@ $(() => {
                 if (result.data.list.length > 0) {
                   $.each(result.data.list, (i, val) => {
                     const task = result.data.list[i];
-                    // console.log(task)
+                    console.log(task)
                     let status;
                     if (task.status === 1) {
                       status = false
@@ -195,7 +196,8 @@ $(() => {
                       status,
                       project: {
                         id: task.project.id,
-                        name: task.project.name
+                        name: task.project.name,
+                        path: task.project.project_path
                       }
                     }
 
