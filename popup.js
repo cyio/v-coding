@@ -183,7 +183,7 @@ $(() => {
                 if (result.data.list.length > 0) {
                   $.each(result.data.list, (i, val) => {
                     const task = result.data.list[i];
-                    console.log(task)
+                    // console.log(task)
                     let status;
                     if (task.status === 1) {
                       status = false

@@ -747,13 +747,12 @@ label[for='toggle-all'] {
 .todo-list li label {
   white-space: pre;
   word-break: break-word;
-  padding: 5px;
-  margin-left: 45px;
-  display: block;
+  display: inline-block;
   line-height: 1.2;
   transition: color 0.4s;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 80%;
 }
 
 .todo-list li.completed label {
@@ -767,12 +766,14 @@ label[for='toggle-all'] {
   top: 0;
   right: 25px;
   bottom: 0;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   margin: auto 0;
   font-size: 20px;
   color: #cc9a9a;
   transition: color 0.2s ease-out;
+  line-height: 20px;
+  background: #fff;
 }
 
 .todo-list li .destroy:hover {

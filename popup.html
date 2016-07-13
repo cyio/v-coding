@@ -63,8 +63,9 @@
           <ul class="todo-list" v-if="showLists">
             <li class="todo" v-for="(index, todo) in filterTodos()">
               <div class="view">
-                <input type="checkbox" v-model="todo.status" @click="toggleTodo(index)">{{ todo.title }}
-                <a class="detail" href="{{baseUrl + todo.project.path  + '/task/' + todo.id}}"  title="任务详情" target="blank">>></a>
+                <input type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
+                <label>{{ todo.title }}</label>
+                <a class="detail" href="{{baseUrl + todo.project.path  + '/task/' + todo.id}}"  title="任务详情" target="blank">></a>
                 <div class="destroy" @click="deleteTodo(todo.id)"></div>
               </div>
               <input class="edit" type="text">
