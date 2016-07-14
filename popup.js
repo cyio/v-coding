@@ -1,6 +1,7 @@
 $(() => {
   'use strict';
-    
+  
+  let bg = chrome.extension.getBackgroundPage();
   window.store = {
     state: {
       user: {},
@@ -61,7 +62,7 @@ $(() => {
             }
             window.store.setUser(self.user)
           }
-          self.$parent.$data.points_left = self.user.points_left
+          // self.$parent.$data.points_left = self.user.points_left
         });
       },
       removeActivityCount() {
@@ -122,6 +123,7 @@ $(() => {
           });
 
           window.store.setProjects(projects)
+          bg.projects = projects
         }, error => {
           chrome.tabs.create({
             url: "https://coding.net/login"
@@ -282,6 +284,9 @@ $(() => {
       },
       goBack () {
         window.store.setCurrentView('projects')
+        bg.snapshot = {
+          view: this.publicState.currentView
+        }
       }
     },
     events: {
@@ -305,8 +310,20 @@ $(() => {
     },
     events: {
       getLastProject (id, name) {
-        this.publicState.currentView = 'task'
+        window.store.setCurrentView('task')
+        bg.snapshot = {
+          view: this.publicState.currentView,
+          id: id,
+          name: name
+        }
         window.store.setLastProject(id, name)
+      }
+    },
+    ready () {
+      if (bg.snapshot.view === 'task') {
+        window.store.setCurrentView(bg.snapshot.view)
+        window.store.setProjects(bg.projects)
+        window.store.setLastProject(bg.snapshot.id, bg.snapshot.name)
       }
     }
   })
