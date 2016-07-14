@@ -2,7 +2,7 @@ $(() => {
   'use strict';
   
   let bg = chrome.extension.getBackgroundPage();
-  window.store = {
+  let store = {
     state: {
       user: {},
       projects: {},
@@ -60,7 +60,7 @@ $(() => {
               'path': userData.path,
               'points_left': userData.points_left
             }
-            window.store.setUser(self.user)
+            store.setUser(self.user)
           }
           // self.$parent.$data.points_left = self.user.points_left
         });
@@ -122,7 +122,7 @@ $(() => {
             });
           });
 
-          window.store.setProjects(projects)
+          store.setProjects(projects)
           bg.projects = projects
         }, error => {
           chrome.tabs.create({
@@ -152,7 +152,7 @@ $(() => {
         loading: true,
         todosCount: 0,
         baseUrl: "https://coding.net",
-        publicState: window.store.state
+        publicState: store.state
       };
     },
     computed: {
@@ -204,7 +204,7 @@ $(() => {
                     }
 
                     self.currentProject = self.todos[i].project
-                    window.store.setLastProject(self.currentProject.id, self.currentProject.name)
+                    store.setLastProject(self.currentProject.id, self.currentProject.name)
                   })
                 }
                 
@@ -283,7 +283,7 @@ $(() => {
         this.todosCount = this.filterTodos().length
       },
       goBack () {
-        window.store.setCurrentView('projects')
+        store.setCurrentView('projects')
         bg.snapshot = {
           view: this.publicState.currentView
         }
@@ -304,26 +304,26 @@ $(() => {
     el: '#app',
     data: {
       points_left: 0,
-      publicState: window.store.state
+      publicState: store.state
     },
     methods: {
     },
     events: {
       getLastProject (id, name) {
-        window.store.setCurrentView('task')
+        store.setCurrentView('task')
         bg.snapshot = {
           view: this.publicState.currentView,
           id: id,
           name: name
         }
-        window.store.setLastProject(id, name)
+        store.setLastProject(id, name)
       }
     },
     ready () {
-      if (bg.snapshot.view === 'task') {
-        window.store.setCurrentView(bg.snapshot.view)
-        window.store.setProjects(bg.projects)
-        window.store.setLastProject(bg.snapshot.id, bg.snapshot.name)
+      if (bg.snapshot && bg.snapshot.view === 'task') {
+        store.setCurrentView(bg.snapshot.view)
+        store.setProjects(bg.projects)
+        store.setLastProject(bg.snapshot.id, bg.snapshot.name)
       }
     }
   })
