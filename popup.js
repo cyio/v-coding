@@ -182,7 +182,7 @@ $(() => {
           (resolve, reject) => {
             CodingAPI.task.list(projectID, user, 'all', result => {
               if (!result.code) {
-                if (result.data.list.length > 0) {
+                if (result.data && result.data.list.length > 0) {
                   $.each(result.data.list, (i, val) => {
                     const task = result.data.list[i];
                     // console.log(task)
@@ -227,6 +227,10 @@ $(() => {
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status ? status = 2 : status = 1
         CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {})
+      },
+      updateTodo(index, e) {
+				this.todos[index].title = e.target.value
+        CodingAPI.task.update(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, this.todos[index].title, result => {console.log(result.code)})
       },
       addTodo() {
         this.loading = true

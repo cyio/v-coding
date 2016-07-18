@@ -77,7 +77,15 @@
 			return put(url, callback, {
 				status: status
 			})
+		},
+		update: function (projectName, userName, todoID, content, callback) {
+			var url = [CODING_HOST, '/api/user/' + userName + '/project/' + projectName + '/task/' + todoID + '/content'].join('');
+			console.log(url + ' ' + content)
+			return put(url, callback, {
+				content: content
+			})
 		}
+	
 	}
 	var projects = function (type, callback) {
 		var url = [CODING_HOST, '/api/user/projects?pageSize=1000'].join('');
