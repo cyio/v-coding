@@ -64,7 +64,7 @@
             <li class="todo" v-for="(index, todo) in filterTodos()">
               <div class="view">
                 <input type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
-                <textarea @blur="updateTodo(index, $event)" @keyup.enter="updateTodo(index, $event)">{{ todo.title }}</textarea>
+                <input type="text" class="content" @blur="updateTodo(index, $event)" @keyup.enter="updateTodo(index, $event)" value="{{ todo.title }}">
                 <a class="detail" href="{{baseUrl + todo.project.path  + '/task/' + todo.id}}"  title="任务详情" target="blank">></a>
                 <div class="destroy" @click="deleteTodo(todo.id)"></div>
               </div>

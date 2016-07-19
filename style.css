@@ -699,7 +699,6 @@ label[for='toggle-all'] {
   border-bottom: 1px solid #ededed;
   height: 32px;
   line-height: 32px;
-	padding-top: 3px;
 	box-sizing: border-box;
 }
 
@@ -744,18 +743,6 @@ label[for='toggle-all'] {
 
 .todo-list li .toggle:checked:after {
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
-}
-
-.todo-list li textarea {
-  word-break: break-word;
-	height: 20px;
-  line-height: 20px;
-  transition: color 0.4s;
-  overflow: hidden;
-	resize: none;
-	border: none;
-  text-overflow: ellipsis;
-  max-width: 80%;
 }
 
 .todo-list li.completed label {
@@ -1080,4 +1067,18 @@ i.icon.icon-back {
 .todo-list a.detail {
   float: right;
   padding-right: 5px;
+}
+.todo-list .content {
+	border: none;
+	height: 20px;
+	line-height: 20px;
+	text-indent: 5px;
+	text-indent: 5px;
+ 	width: 78%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.4s;
+}
+.todo-list .content:focus {
+	background: #f1f1f1;
 }

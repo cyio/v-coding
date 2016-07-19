@@ -229,6 +229,7 @@ $(() => {
         CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {})
       },
       updateTodo(index, e) {
+				if (this.todos[index].title === e.target.value) return
 				this.todos[index].title = e.target.value
         CodingAPI.task.update(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, this.todos[index].title, result => {console.log(result.code)})
       },
