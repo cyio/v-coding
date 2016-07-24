@@ -759,10 +759,13 @@ label[for='toggle-all'] {
   height: 20px;
   margin: auto 0;
   font-size: 20px;
+	text-align: center;
   color: #cc9a9a;
   transition: color 0.2s ease-out;
   line-height: 20px;
   background: #fff;
+  border: 1px solid #c1c2c3;
+  border-radius: 3px;
 }
 
 .todo-list li .destroy:hover {
@@ -771,8 +774,6 @@ label[for='toggle-all'] {
 
 .todo-list li .destroy:after {
   content: '×';
-  border: 1px solid #c1c2c3;
-  border-radius: 3px;
 }
 
 .todo-list li:hover .destroy {
