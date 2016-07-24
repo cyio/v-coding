@@ -698,7 +698,7 @@ label[for='toggle-all'] {
   border-bottom: 1px solid #ededed;
   height: 32px;
   line-height: 32px;
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .todo-list li:last-child {
@@ -1047,7 +1047,8 @@ i.icon.icon-back {
   width: 53px;
 }
 
-.navbar, .toolbar {
+.navbar,
+.toolbar {
   height: 44px;
   width: 100%;
   box-sizing: border-box;
@@ -1072,19 +1073,31 @@ i.icon.icon-back {
   float: right;
   padding-right: 5px;
 }
+
 .todo-list .content {
-	border: none;
-	height: 20px;
-	line-height: 20px;
-	text-indent: 5px;
-	text-indent: 5px;
- 	width: 78%;
+  border: none;
+  height: 20px;
+  line-height: 20px;
+  text-indent: 5px;
+  text-indent: 5px;
+  width: 78%;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color 0.4s;
 }
+
 .todo-list .content:focus {
-	background: #f1f1f1;
+  background: #f1f1f1;
+}
+
+.fade-transition {
+	opacity: 1;
+	-webkit-transition: opacity linear 0.2s;
+	transition: opacity linear 0.2s
+}
+
+.fade-enter, .fade-leave {
+	opacity: 0;
 }
 /****************************
   ANIMATIONS
