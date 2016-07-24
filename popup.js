@@ -43,7 +43,8 @@ $(() => {
         user: {},
         projects: {},
         baseUrl: "https://coding.net",
-        notificationUnreadProjects: []
+				notificationUnreadProjects: [],
+				loading: null 
       }
     },
     computed: {},
@@ -80,7 +81,8 @@ $(() => {
         });
       },
       loadProjects() {
-        const self = this;
+        const self = this
+				self.loading = true
 
         const getProjects = () => new Promise(
           (resolve, reject) => {
@@ -124,6 +126,7 @@ $(() => {
 
           store.setProjects(projects)
           bg.projects = projects
+					self.loading = false
         }, error => {
           chrome.tabs.create({
             url: "https://coding.net/login"
@@ -147,7 +150,6 @@ $(() => {
         newTodo: '',
         editedTodo: null,
         visibility: 'processing',
-        showLists: false,
         showProjectMenu: false,
         loading: true,
         todosCount: 0,
@@ -175,7 +177,6 @@ $(() => {
         const self = this
         const user = this.publicState.projects[0].user
         self.todos.length = 0
-        self.showLists = false
         self.loading = true
 
         const getTodos = () => new Promise(
@@ -202,9 +203,7 @@ $(() => {
                         path: task.project.project_path
                       }
                     }
-
-                    self.currentProject = self.todos[i].project
-                    store.setLastProject(self.currentProject.id, self.currentProject.name)
+                    store.setLastProject(self.todos[i].project.id, self.todos[i].project.name)
                   })
                 }
                 
@@ -217,16 +216,21 @@ $(() => {
         );
 
         getTodos().then(result => {
-          result.length === 0 ? self.showLists = false : self.showLists = true
           self.setTodosCount()
           self.loading = false
+					console.log(self.filterTodos().length, self.visibility)
         })
       },
       toggleTodo(index) {
-        let status;
+        let status
+				const self = this
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status ? status = 2 : status = 1
-        CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {})
+				CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {
+					if (result.code === 0) {
+            // self.loadTodos(self.publicState.lastProject.id)
+					}
+				})
       },
       updateTodo(index, e) {
 				if (this.todos[index].title === e.target.value) return
@@ -240,21 +244,19 @@ $(() => {
         if (!content) {
           return false;
         }
-        CodingAPI.task.create(this.currentProject.id, this.publicState.user.id, content, result => {
+        CodingAPI.task.create(this.publicState.lastProject.id, this.publicState.user.id, content, result => {
           if (result.code === 0) {            
-            self.loadTodos(self.currentProject.id)
+            self.loadTodos(self.publicState.lastProject.id)
             self.newTodo = ''
-            self.loading = false
           }
         })
       },
       deleteTodo(todoID) {
         this.loading = true
         const self = this
-        CodingAPI.task.delete(this.currentProject.id, todoID, result => {
+        CodingAPI.task.delete(this.publicState.lastProject.id, todoID, result => {
           if (result.code === 0) {
-            self.loadTodos(self.currentProject.id)
-            self.loading = false
+            self.loadTodos(self.publicState.lastProject.id)
           }
         })
       },
@@ -274,7 +276,7 @@ $(() => {
         this.setTodosCount()
       },
       filterTodos() {
-        const todos = this.todos;
+        const todos = this.todos
         if (!todos) return
         if (this.visibility === 'all') {
           return todos;

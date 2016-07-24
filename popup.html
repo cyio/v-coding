@@ -42,6 +42,7 @@
 <!--             <a class="project-link" title="项目任务" v-if="project.isPrivate" href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a> -->
             <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>            
           </div>
+          <div v-show="loading" class="progress-spinner"></div>
         </div>
       </section>
     </projects>
@@ -56,11 +57,11 @@
           <div class="right"></div>
         </div>
         <header class="header">
-          <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
+          <input class="new-todo" autofocus autocomplete="off" placeholder="回车添加任务" v-model="newTodo" @keyup.enter="addTodo">
         </header>
         <section class="main">
           <!-- <input class="toggle-all" type="checkbox"> -->
-          <ul class="todo-list" v-if="showLists">
+          <ul class="todo-list" v-if="!loading">
             <li class="todo" v-for="(index, todo) in filterTodos()">
               <div class="view">
                 <input type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
@@ -72,7 +73,7 @@
             </li>
             <h3 v-if="todosCount === 0">暂无进行中任务</h3>
           </ul>
-          <div v-show="loading" class="preloader"></div>
+          <div v-show="loading" class="progress-spinner"></div>
         </section>
         <footer class="footer">
           <span class="todo-count">

@@ -646,14 +646,13 @@ input[type="checkbox"] {
 }
 
 .new-todo {
-  padding: 6px 6px 6px 40px;
+  padding: 6px 6px 6px 25px;
   border: none;
   background: rgba(0, 0, 0, 0.003);
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 
 .main {
-  position: relative;
   z-index: 2;
   border-top: 1px solid #e6e6e6;
   height: 270px;
@@ -1039,6 +1038,11 @@ i.icon.icon-back {
   transform: translate3d(0, 0, 0);
 }
 
+.navbar .left:hover,
+.filters li {
+	cursor: pointer
+}
+
 .navbar .right {
   width: 53px;
 }
@@ -1081,4 +1085,38 @@ i.icon.icon-back {
 }
 .todo-list .content:focus {
 	background: #f1f1f1;
+}
+/****************************
+  ANIMATIONS
+*****************************/
+@keyframes clockwise {
+  to {
+    transform: rotate(360deg) translatez(0);
+  }
+}
+@keyframes counter-clockwise {
+  to {
+    transform: rotate(-360deg) translatez(0);
+  }
+}
+/****************************
+  ANDROID SPINNER
+*****************************/
+.progress-spinner {
+  height: 30px;
+  width: 30px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(112, 112, 112, 0.75) rgba(36, 36, 36, 0.25) rgba(36, 36, 36, 0.25) rgba(36, 36, 36, 0.25);
+  border-radius: 100%;
+  animation: clockwise 0.75s linear infinite;
+}
+/* position spinner in the middle of the page for demonstration */
+.progress-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -15px;
+  margin-top: -15px;
+	z-index: 1000;
 }
