@@ -11,10 +11,11 @@ $(() => {
     },
     init () {      
     },
-    setLastProject (id, name) {
+    setLastProject (id, name, path) {
       this.state.lastProject = {
         id: id,
-        name: name
+        name: name,
+        path: path
       }
       ls.setItem('lastProject', this.state.lastProject)
     },
@@ -203,7 +204,7 @@ $(() => {
                         path: task.project.project_path
                       }
                     }
-                    store.setLastProject(self.todos[i].project.id, self.todos[i].project.name)
+                    store.setLastProject(self.todos[i].project.id, self.todos[i].project.name, self.todos[i].project.path)
                   })
                 }
                 

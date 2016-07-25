@@ -38,8 +38,8 @@
             </a>
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
             <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
-            <a class="project-link" title="项目任务" href="" @click="openTodo(project.id, project.name)"><img src="images/tasklist.svg"></a>
-<!--             <a class="project-link" title="项目任务" v-if="project.isPrivate" href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a> -->
+            <a class="project-link" title="项目任务" v-if="project.isPrivate" href="" @click="openTodo(project.id, project.name, project.path)"><img src="images/tasklist.svg"></a>
+<!--             <a class="project-link" title="项目任务"  href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a> -->
             <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>            
           </div>
           <div v-show="loading" class="progress-spinner"></div>
@@ -54,7 +54,9 @@
             <span>返回</span>
           </div>
           <div class="center">{{publicState.lastProject.name}}</div>
-          <div class="right"></div>
+          <div class="right">
+            <a class="project-link" title="前往coding" href="{{baseUrl + publicState.lastProject.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a>
+          </div>
         </div>
         <header class="header">
           <input class="new-todo" autofocus autocomplete="off" placeholder="回车添加任务" v-model="newTodo" @keyup.enter="addTodo">
@@ -71,7 +73,7 @@
               </div>
               <input class="edit" type="text">
             </li>
-            <h3 v-if="todosCount === 0">暂无进行中任务</h3>
+            <div class="tip" v-if="todosCount === 0">暂无进行中任务</div>
           </ul>
           <div v-show="loading" class="progress-spinner"></div>
         </section>
@@ -84,25 +86,9 @@
             <li><a @click="showDoneTodos" v-bind:class="{ 'active': visibility === 'done' }">已完成</a></li>
             <li><a @click="showAllTodos" v-bind:class="{ 'active': visibility === 'all' }">全部</a></li>
           </ul>
-<!--           <button class="clear-completed">
-            Clear completed
-          </button> -->
         </footer>
       </section>
     </task>
-<!--     <footer id="footer">
-      <div class="tabs-nav">
-        <div class="tab-item" v-bind:class="{'active': publicState.currentView === 'projects'}" v-on:click="changeView('projects')">
-          项目
-        </div>
-        <div class="tab-item" v-bind:class="{'active': publicState.currentView === 'task'}" v-on:click="changeView('task')">
-          任务
-        </div>
-        <div class="tab-item points-left" data-target="">
-          <a href="https://coding.net/user/account/credit" target="blank">MB: {{points_left}}</a>
-        </div>
-      </div>
-    </footer> -->
   </div>
 </body>
 </body>
