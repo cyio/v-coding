@@ -1,15 +1,16 @@
 # v-coding
 
 
-### 特性
+### 主要特性
 
 * 即时过滤项目
 * 项目有代码，提交历史，任务，合并请求等快捷访问链接
-* 简单的任务处理，创建、切换完成状态，删除等
+* 简单的任务处理，创建、编辑标题，切换完成状态，删除等（仅私有项目）
 * 未读消息Chrome扩展图标提示（由 [fnsoxt](https://github.com/fnsoxt) 提供）
 
 ### 扩展截图
-![](http://ww2.sinaimg.cn/large/4e5d3ea7jw1f3zp5166fgj209f0e8myb.jpg)
+![项目列表](http://ww1.sinaimg.cn/large/4e5d3ea7jw1f668b8a5hoj209r0evgmk.jpg)
+![任务管理](http://ww3.sinaimg.cn/large/4e5d3ea7jw1f668crq8yoj209i0dumy6.jpg)
 
 ### 说明
 使用vuejs开发
