@@ -10,7 +10,21 @@
 
 ### 扩展截图
 ![项目列表](http://ww1.sinaimg.cn/large/4e5d3ea7jw1f668b8a5hoj209r0evgmk.jpg)
+
 ![任务管理](http://ww3.sinaimg.cn/large/4e5d3ea7jw1f668crq8yoj209i0dumy6.jpg)
+
+### 安装
+从Chrome应用商店安装（待添加）
+或clone到本地
+`$ git clone https://github.com/cyio/v-coding.git`
+
+### 使用
+* 建议为v-coding添加快捷键，如`Alt-Shift-C`
+键盘快捷键配置地址：`chrome://extensions/configureCommands`
+或者到扩展管理页底部右边有个设置快捷键链接
+* 打开应用界面后，直接输入项目关键字，过滤到目标项目后，按`Tab`做进一步定位
+* 项目列表项说明：依次为项目动态，Git仓库，任务管理（仅私有项目），提交历史
+* 任务管理页目前支持的操作：创建任务、编辑任务标题，切换任务状态，删除任务，点击顶栏右边的图标，可访问coding进行更高阶的操作
 
 ### 说明
 使用vuejs开发

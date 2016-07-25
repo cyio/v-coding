@@ -1,6 +1,6 @@
 $(() => {
   'use strict';
-  
+
   let bg = chrome.extension.getBackgroundPage();
   let store = {
     state: {
@@ -9,9 +9,8 @@ $(() => {
       lastProject: null,
       currentView: 'projects'
     },
-    init () {      
-    },
-    setLastProject (id, name, path) {
+    init() {},
+    setLastProject(id, name, path) {
       this.state.lastProject = {
         id: id,
         name: name,
@@ -19,21 +18,21 @@ $(() => {
       }
       ls.setItem('lastProject', this.state.lastProject)
     },
-    getLastProject () {
+    getLastProject() {
       return ls.getItem('lastProject')
     },
-    setUser (data) {
+    setUser(data) {
       this.state.user = data
       ls.setItem('user', data)
     },
-    setProjects (data) {
+    setProjects(data) {
       this.state.projects = data
       ls.setItem('projects', data)
     },
-    setCurrentView (view) {
+    setCurrentView(view) {
       this.state.currentView = view
     },
-    getCurrentView () {
+    getCurrentView() {
       return this.state.currentView
     }
   }
@@ -44,8 +43,8 @@ $(() => {
         user: {},
         projects: {},
         baseUrl: "https://coding.net",
-				notificationUnreadProjects: [],
-				loading: null 
+        notificationUnreadProjects: [],
+        loading: null
       }
     },
     computed: {},
@@ -83,7 +82,7 @@ $(() => {
       },
       loadProjects() {
         const self = this
-				self.loading = true
+        self.loading = true
 
         const getProjects = () => new Promise(
           (resolve, reject) => {
@@ -127,14 +126,14 @@ $(() => {
 
           store.setProjects(projects)
           bg.projects = projects
-					self.loading = false
+          self.loading = false
         }, error => {
           chrome.tabs.create({
             url: "https://coding.net/login"
           });
         })
       },
-      openTodo (id, name) {
+      openTodo(id, name) {
         this.$dispatch('getLastProject', id, name)
       }
     },
@@ -161,11 +160,9 @@ $(() => {
     computed: {
       allDone: {
         get() {
-          console.log('get alldone')
           return this.remaining === 0;
         },
         set(value) {
-          console.log('set alldone');
           this.todos.forEach(todo => {
             todo.done = value;
           });
@@ -207,7 +204,7 @@ $(() => {
                     store.setLastProject(self.todos[i].project.id, self.todos[i].project.name, self.todos[i].project.path)
                   })
                 }
-                
+
                 resolve(self.todos);
               } else {
                 reject('fail')
@@ -219,24 +216,23 @@ $(() => {
         getTodos().then(result => {
           self.setTodosCount()
           self.loading = false
-					console.log(self.filterTodos().length, self.visibility)
         })
       },
       toggleTodo(index) {
         let status
-				const self = this
+        const self = this
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status ? status = 2 : status = 1
-				CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {
-					if (result.code === 0) {
+        CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {
+          if (result.code === 0) {
             // self.loadTodos(self.publicState.lastProject.id)
-					}
-				})
+          }
+        })
       },
       updateTodo(index, e) {
-				if (this.todos[index].title === e.target.value) return
-				this.todos[index].title = e.target.value
-        CodingAPI.task.update(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, this.todos[index].title, result => {console.log(result.code)})
+        if (this.todos[index].title === e.target.value) return
+        this.todos[index].title = e.target.value
+        CodingAPI.task.update(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, this.todos[index].title, result => { console.log(result.code) })
       },
       addTodo() {
         this.loading = true
@@ -246,7 +242,7 @@ $(() => {
           return false;
         }
         CodingAPI.task.create(this.publicState.lastProject.id, this.publicState.user.id, content, result => {
-          if (result.code === 0) {            
+          if (result.code === 0) {
             self.loadTodos(self.publicState.lastProject.id)
             self.newTodo = ''
           }
@@ -290,21 +286,17 @@ $(() => {
       setTodosCount() {
         this.todosCount = this.filterTodos().length
       },
-      goBack () {
+      goBack() {
         store.setCurrentView('projects')
         bg.snapshot = {
           view: this.publicState.currentView
         }
       }
     },
-    events: {
-    },
+    events: {},
     ready() {
       const self = this
       this.loadTodos(this.publicState.lastProject.id)
-      // if (this.lastProjectID) {
-      //   this.loadTodos(self.lastProjectID)
-      // }
     }
   });
 
@@ -314,10 +306,9 @@ $(() => {
       points_left: 0,
       publicState: store.state
     },
-    methods: {
-    },
+    methods: {},
     events: {
-      getLastProject (id, name) {
+      getLastProject(id, name) {
         store.setCurrentView('task')
         bg.snapshot = {
           view: this.publicState.currentView,
@@ -327,7 +318,7 @@ $(() => {
         store.setLastProject(id, name)
       }
     },
-    ready () {
+    ready() {
       if (bg.snapshot && bg.snapshot.view === 'task') {
         store.setCurrentView(bg.snapshot.view)
         store.setProjects(bg.projects)

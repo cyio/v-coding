@@ -39,8 +39,8 @@
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
             <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
             <a class="project-link" title="项目任务" v-if="project.isPrivate" href="" @click="openTodo(project.id, project.name, project.path)"><img src="images/tasklist.svg"></a>
-<!--             <a class="project-link" title="项目任务"  href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a> -->
-            <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>            
+            <!--             <a class="project-link" title="项目任务"  href="{{baseUrl + project.path  + '/tasks'}}" target="_blank"><img src="images/tasklist.svg"></a> -->
+            <a class="project-link" title="合并请求" href="{{baseUrl + project.path  + '/git/merges/review'}}" target="_blank"><img src="images/git-pull-request.svg"></a>
           </div>
           <div v-show="loading" class="progress-spinner"></div>
         </div>
@@ -68,7 +68,7 @@
               <div class="view">
                 <input type="checkbox" v-model="todo.status" @click="toggleTodo(index)">
                 <input type="text" class="content" @blur="updateTodo(index, $event)" @keyup.enter="updateTodo(index, $event)" value="{{ todo.title }}">
-                <a class="detail" href="{{baseUrl + todo.project.path  + '/task/' + todo.id}}"  title="任务详情" target="blank">></a>
+                <a class="detail" href="{{baseUrl + todo.project.path  + '/task/' + todo.id}}" title="任务详情" target="blank">></a>
                 <div class="destroy" @click="deleteTodo(todo.id)"></div>
               </div>
               <input class="edit" type="text">
@@ -92,4 +92,5 @@
   </div>
 </body>
 </body>
+
 </html>

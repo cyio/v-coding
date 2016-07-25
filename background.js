@@ -2,7 +2,7 @@ chrome.alarms.create('unread', {
   periodInMinutes: 1
 });
 
-chrome.alarms.onAlarm.addListener(function (alarm) {
+chrome.alarms.onAlarm.addListener(function(alarm) {
   var num = 0;
 
   CodingAPI.projects('all', function(projects) {
@@ -12,6 +12,6 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
       });
     }
 
-    chrome.browserAction.setBadgeText({text:num>0?String(num):''});
-  });            
+    chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
+  });
 });
