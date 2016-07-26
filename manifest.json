@@ -26,9 +26,6 @@
     "permissions": [
         "alarms",
         "tabs",
-        "https://coding.net/*/*",
-        "https://ide.coding.net/*",
-        "http://*.codingapp.com/",
-        "http://*.coding.io/"
+        "https://coding.net/*/*"
     ]
 }
