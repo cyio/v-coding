@@ -32,10 +32,11 @@
         </div>
         <div id="project-list">
           <div class="project" v-for="project in projects | filterBy name in 'name'">
-            <a class="avatar" href="{{baseUrl + project.path}}" target="_blank">
+            <div class="main-link">
+              <i class="icon"><img v-if="project.isPrivate" src="/images/lock.svg"></i>
+              <a class="" href="{{baseUrl + project.path}}" target="_blank">{{project.name}}</a>
               <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
-              <span class="name">{{project.name}}</span><img v-if="project.isPrivate" src="/images/lock.svg">
-            </a>
+            </div>
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
             <a class="project-link" title="提交历史" href="{{baseUrl + project.path  + '/git/commits/'}}{{project.default_branch}}" target="_blank"><img src="/images/history.svg"></a>
             <a class="project-link" title="项目任务" v-if="project.isPrivate" href="" @click="openTodo(project.id, project.name, project.path)"><img src="images/tasklist.svg"></a>
