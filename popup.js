@@ -56,6 +56,7 @@ $(() => {
             const userData = result.data;
             self.user = {
               'name': userData.name,
+              'key': userData.global_key,
               'id': userData.id,
               'avatar': userData.avatar,
               'path': userData.path,
@@ -173,7 +174,7 @@ $(() => {
       loadTodos(projectID) {
         // console.log(ProjectID)
         const self = this
-        const user = this.publicState.projects[0].user
+        const user = this.publicState.user.key
         self.todos.length = 0
         self.loading = true
 
@@ -223,7 +224,7 @@ $(() => {
         const self = this
         // 监听v-model数据可能比较麻烦，这里是变通实现
         !this.todos[index].status ? status = 2 : status = 1
-        CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, status, result => {
+        CodingAPI.task.toggle(this.todos[index].project.name, this.publicState.user.key, this.todos[index].id, status, result => {
           if (result.code === 0) {
             // self.loadTodos(self.publicState.lastProject.id)
           }
@@ -232,7 +233,7 @@ $(() => {
       updateTodo(index, e) {
         if (this.todos[index].title === e.target.value) return
         this.todos[index].title = e.target.value
-        CodingAPI.task.update(this.todos[index].project.name, this.publicState.projects[0].user, this.todos[index].id, this.todos[index].title, result => { console.log(result.code) })
+        CodingAPI.task.update(this.todos[index].project.name, this.publicState.user.key, this.todos[index].id, this.todos[index].title, result => { console.log(result.code) })
       },
       addTodo() {
         this.loading = true
@@ -323,6 +324,9 @@ $(() => {
         store.setCurrentView(bg.snapshot.view)
         store.setProjects(bg.projects)
         store.setLastProject(bg.snapshot.id, bg.snapshot.name)
+      }
+      if (ls.getItem('user')) {
+        store.setUser(ls.getItem('user'))
       }
     }
   })
