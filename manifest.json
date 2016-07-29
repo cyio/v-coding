@@ -2,7 +2,8 @@
     "name": "v-coding",
     "version": "0.1.0",
     "manifest_version": 2,
-    "description": "",
+    "description": "增强 coding.net 使用体验，源代码地址：https://github.com/cyio/v-coding",
+    "author": "Oaker",
     "icons": {
         "16": "images/icon-16.png",
         "128": "images/icon-128.png"
@@ -20,7 +21,7 @@
             "19": "images/icon-19.png",
             "38": "images/icon-38.png"
         },
-        "default_title": "Coding+",
+        "default_title": "v-coding",
         "default_popup": "popup.html"
     },
     "permissions": [

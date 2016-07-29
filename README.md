@@ -1,5 +1,6 @@
 # v-coding
 
+<a href="https://chrome.google.com/webstore/detail/oojdnccablnopmpcghpmfgpbcbgacagf"><img src="https://camo.githubusercontent.com/334b4f665751356b1f4afb758f8ddde55b9c71b8/68747470733a2f2f7261772e6769746875622e636f6d2f476f6f676c654368726f6d652f6368726f6d652d6170702d73616d706c65732f6d61737465722f74727969746e6f77627574746f6e5f736d616c6c2e706e67" border="0" /></a>
 
 ### 主要特性
 
@@ -13,9 +14,8 @@
 
 ![任务管理](http://ww3.sinaimg.cn/large/4e5d3ea7jw1f668crq8yoj209i0dumy6.jpg)
 
-### 安装
-从Chrome应用商店安装（待添加）
-或clone到本地
+### 手动本地安装
+
 `$ git clone https://github.com/cyio/v-coding.git`
 
 ### 使用
@@ -29,5 +29,3 @@
 ### 说明
 使用vuejs开发
 并参考了这个项目 [Coding/Coding-Plus: 为 Coding.net 添加更多酷炫的特性的 Chrome 插件！](https://github.com/Coding/Coding-Plus)
-
-由于本人暂无信用卡，近期没有上架Chrome商店的打算，麻烦您 clone 或打包下载本项目使用
