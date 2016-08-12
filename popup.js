@@ -81,6 +81,9 @@ $(() => {
           });
         });
       },
+			updateBadgeCount() {
+				chrome.runtime.sendMessage("updateBadgeCount")
+			},
       loadProjects() {
         const self = this
         self.loading = true

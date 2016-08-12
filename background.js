@@ -2,16 +2,26 @@ chrome.alarms.create('unread', {
   periodInMinutes: 1
 });
 
-chrome.alarms.onAlarm.addListener(function(alarm) {
-  var num = 0;
+chrome.alarms.onAlarm.addListener((alarm) => {
+	updateActivityCount() 
+});
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+	if (message === 'updateBadgeCount') {
+		updateActivityCount()
+	}
+});
 
-  CodingAPI.projects('all', function(projects) {
+const updateActivityCount = () => {
+  let num = 0
+
+  CodingAPI.projects('all', (projects) => {
     if (!projects.code) {
-      $.map(projects, function(project) {
+      $.map(projects, (project) => {
         num += project.un_read_activities_count || 0;
       });
     }
 
     chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
   });
-});
+
+}

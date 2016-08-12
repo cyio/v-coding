@@ -34,7 +34,7 @@
           <div class="project" v-for="project in projects | filterBy name in 'name'">
             <div class="main-link">
               <i class="icon"><img v-if="project.isPrivate" src="/images/lock.svg"></i>
-              <a class="" href="{{baseUrl + project.path}}" target="_blank">{{project.name}}</a>
+              <a class="" href="{{baseUrl + project.path}}" target="_blank" @click="updateBadgeCount">{{project.name}}</a>
               <span class="activity-update-count update-count-tip" v-if="project.activityUpdateCount">{{project.activityUpdateCount}}</span>
             </div>
             <a class="project-link" title="代码" href="{{baseUrl + project.path  + '/git'}}" target="_blank"><img src="/images/code.svg"></a>
@@ -48,7 +48,7 @@
       </section>
     </projects>
     <task inline-template v-if="publicState.currentView === 'task'">
-      <section class="todoapp tab-page">
+      <section class="todoapp tab-page" v-on:keyup.8="">
         <div class="navbar">
           <div class="left" @click="goBack">
             <i class="icon icon-back"></i>
