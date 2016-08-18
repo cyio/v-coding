@@ -7,7 +7,9 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message === 'updateBadgeCount') {
-		updateActivityCount()
+    setTimeout(()=>{
+      updateActivityCount()
+    }, 2000)
 	}
 });
 
@@ -20,7 +22,6 @@ const updateActivityCount = () => {
         num += project.un_read_activities_count || 0;
       });
     }
-
     chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
   });
 

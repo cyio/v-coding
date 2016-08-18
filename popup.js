@@ -261,17 +261,14 @@ $(() => {
           }
         })
       },
-      //显示所有todos
       showAllTodos() {
         this.visibility = 'all';
         this.setTodosCount()
       },
-      //显示未完成的todos
       showProcessingTodos() {
         this.visibility = 'processing'
         this.setTodosCount();
       },
-      //显示已完成的todos
       showDoneTodos() {
         this.visibility = 'done';
         this.setTodosCount()
@@ -331,6 +328,6 @@ $(() => {
       if (ls.getItem('user')) {
         store.setUser(ls.getItem('user'))
       }
-    }
+		}
   })
 });
