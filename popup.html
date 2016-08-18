@@ -48,9 +48,9 @@
       </section>
     </projects>
     <task inline-template v-if="publicState.currentView === 'task'">
-      <section class="todoapp tab-page" v-on:keyup.8="">
+      <section class="todoapp tab-page" >
         <div class="navbar">
-          <div class="left" @click="goBack">
+          <div class="left" @click="goBack" tabindex="0" v-on:keyup.enter="goBack">
             <i class="icon icon-back"></i>
             <span>返回</span>
           </div>
