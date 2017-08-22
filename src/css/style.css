@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 0.2em;
+  height: 0.3em;
+}
+::-webkit-scrollbar-thumb {
+  background: #AAAAAB;
+}
+::-webkit-scrollbar-track {
+  background: #F1F1F1;
+}
+
+html, body {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+body, #app {
+  width: 350px;
+  height: 525px;
+  margin: 0;
+  overflow: hidden;
+}
