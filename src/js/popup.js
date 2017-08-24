@@ -19,8 +19,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: {},
-      projects: [],
+      user: null,
+      projects: null,
       notificationUnreadProjects: [],
       loading: true
     }
@@ -31,7 +31,7 @@ class App extends React.Component {
       (resolve, reject) => {
         CodingAPI.projects('all', result => {
           if (!result.code) {
-            // console.log(projects)
+            console.log(result)
             const projects = $.map(result, project => {
               if (!!project.un_read_activities_count) {
                 let tmp = this.state.notificationUnreadProjects
@@ -59,23 +59,16 @@ class App extends React.Component {
     );
   }
 
-  getDefaultBranch(projects) {
-    return new Promise(
-      (resolve, reject) => {
-        for (let [index, project] in projects) {
-          $.get(`https://coding.net/api/user/${projects[index].user}/project/${projects[index].name}/git/branches`, (result, status, request) => {
-            if (status == 200 && result.code === 0) {
-              projects[index].default_branch = result.data.list[0].name
-              console.log('exec')
-              if (index === projects.length - 1) {
-                console.log('resolve', projects)
-                resolve(projects)
-              }
-            }
-          });
+  async addDefaultBranch(projects) {
+    for (let project of projects) {
+      await $.get(`https://coding.net/api/user/${project.user}/project/${project.name}/git/branches`, (result, status, request) => {
+        if (result.code === 0) {
+          project.default_branch = result.data.list[0].name
         }
-      }
-    );
+      })
+    }
+
+    return projects
   }
 
   loadProjects() {
@@ -83,16 +76,60 @@ class App extends React.Component {
 
     this.getProjects()
       .then(projects => {
-        console.log(projects)
+        // return this.addDefaultBranch(projects)
         this.setState({
           projects: projects,
           loading: false
         })
+				Storage.setValue('projects', projects)
       })
       .catch(error => console.error(error))
   }
+
+  getUser() {
+    CodingAPI.me(result => {
+      if (!result.code) {
+        const userData = result.data;
+        const user = {
+          'name': userData.name,
+          'key': userData.global_key,
+          'id': userData.id,
+          'avatar': userData.avatar,
+          'path': userData.path,
+          'points_left': userData.points_left
+        }
+        this.setState({user: user})
+      }
+    });
+  }
+
+
+  removeActivityCount() {
+    console.log(this.state.notificationUnreadProjects)
+    const ids = $.map(this.state.notificationUnreadProjects, project => project.id);
+    CodingAPI.removeCount(ids, () => {
+      $.each(this.state.projects, (i, project) => {
+        project.activityUpdateCount = 0;
+      });
+      this.setState({notificationUnreadProjects: []})
+      this.loadProjects();
+      chrome.browserAction.setBadgeText({
+        text: ''
+      });
+    });
+  }
+
   componentDidMount() {
-    this.loadProjects()
+    const projects = Storage.getValue('projects')
+    this.getUser()
+    if (projects) {
+      this.setState({
+        projects: projects,
+        loading: false
+      })
+    } else {
+      this.loadProjects()
+    }
   }
 
   componentWillUnmount() {
@@ -101,8 +138,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar user={{name: 'oaker'}}/>
-        <ProjectList projects={this.state.projects} loading={this.state.loading}/>
+        <Navbar user={this.state.user} loadProjects={this.loadProjects.bind(this)} removeActivityCount={this.removeActivityCount.bind(this)} />
+        <ProjectList projects={this.state.projects} loading={this.state.loading} />
       </div>
     )
   }

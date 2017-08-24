@@ -39,8 +39,9 @@ export default class ProjectList extends React.Component {
                   { project.activityUpdateCount > 0 && <span className="activity-update-count update-count-tip" >{project.activityUpdateCount}</span> } 
                 </div>
                 <a className="project-link" title="代码" href={baseUrl + project.path  + '/git'} target="_blank"><img src="/images/code.svg" /></a>
-                <a className="project-link" title="提交历史" href={baseUrl + project.path  + '/git/commits/' + project.default_branch} target="_blank"><img src="/images/history.svg" /></a>
+                <a className="project-link" title="提交历史" href={baseUrl + project.path  + '/git/commits/' + 'master'} target="_blank"><img src="/images/history.svg" /></a>
                 <a className="project-link" title="合并请求" href={baseUrl + project.path  + '/git/merges/review'} target="_blank"><img src="/images/git-pull-request.svg" /></a>
+                <span className="project-link" title="克隆地址" href={project.ssh_url} target="_blank"><img src="/images/history.svg" /></span>
               </div>
             )
           })
