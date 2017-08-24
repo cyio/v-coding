@@ -5,7 +5,11 @@
     "default_icon": "images/icon.png",
     "default_popup": "html/popup.html"
   },
-  "background": { "scripts": ["js/background.js"] },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
   "content_scripts": [{
     "matches": [ "http://*/*", "https://*/*" ],
     "js": [ "js/content.js" ]

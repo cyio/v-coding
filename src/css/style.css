@@ -1,26 +1,712 @@
-* {
-  box-sizing: border-box;
+a {
+  text-decoration: none;
+  color: #4078c0;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+.update-count-tip {
+  position: absolute;
+  padding: 2px;
+  width: auto;
+  min-width: 12px;
+  height: 12px;
+  line-height: 12px;
+  background: #f75288;
+  border-radius: 12px;
+  color: #FFF;
+  font-size: 10px;
+  font-style: normal;
+  border: 2px solid #FFF;
+  text-align: center;
+  right: 2px;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 320px;
+  height: 425px;
+  font-family: 'Microsoft Yahei', 'Helvetica Neue', sans-serif, SimHei;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+.tab-page {
+  height: 420px;
+}
+
+#projects .project {
+  height: 20px;
+  padding: 5px 10px;
+  line-height: 20px;
+  border-bottom: 1px solid #EEE;
+  position: relative;
+}
+
+#projects .project:first-child {
+  border-top: 1px solid #EEE;
+}
+
+#projects .navbar {
+  border-bottom: 1px solid #F5EEEE;
+}
+
+.navbar-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 40px;
+}
+
+#projects .project .main-link {
+  display: inline-block;
+  width: 180px;
+  border-right: 1px solid #E8E7E7;
+  position: relative
+}
+#projects .project .main-link a {
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+#projects .project .main-link .icon {
+  width: 12px;
+}
+
+#projects .project a:hover {
+  color: #003975;
+}
+
+/* project quick toolbar */
+
+#projects .navbar {
+  position: relative;
+}
+
+#projects .navbar .toolbar-item {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 30px;
+  border: 1px solid #EEE;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 6px;
+}
+
+#projects {
+  height: 380px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.fa-play-circle {
+  font-size: 18px;
 }
 
 ::-webkit-scrollbar {
-  width: 0.2em;
+  width: 0.3em;
   height: 0.3em;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #AAAAAB;
 }
+
 ::-webkit-scrollbar-track {
   background: #F1F1F1;
 }
 
-html, body {
+body {
+  scrollbar-face-color: #AAAAAB;
+  scrollbar-track-color: #F1F1F1;
+}
+
+.points-left a {
+  color: green;
+}
+
+.search-projects {
+  margin-left: 20px;
+  font-size: 16px;
+  height: 18px;
+  width: 150px;
+}
+
+.username {
+  display: inline-block;
+  display: inline-block;
+  width: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.project-link {
+  font-size: 16px;
+  padding: 2px;
+  color: #6D6D6D;
+}
+
+// tasklist
+button,
+input[type="checkbox"] {
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.todoapp {
+  background: #fff;
   position: relative;
+}
+
+.todoapp input::-webkit-input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #e6e6e6;
+}
+
+.todoapp input::-moz-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #e6e6e6;
+}
+
+.todoapp input::input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #e6e6e6;
+}
+
+.todoapp h1 {
+  position: absolute;
+  top: -155px;
   width: 100%;
+  font-size: 100px;
+  font-weight: 100;
+  text-align: center;
+  color: rgba(175, 47, 47, 0.15);
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+}
+
+.new-todo,
+.edit {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  font-size: 18px;
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: 1.4em;
+  border: 0;
+  outline: none;
+  color: inherit;
+  padding: 6px;
+  border: 1px solid #999;
+  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.new-todo {
+  padding: 6px 6px 6px 25px;
+  border: none;
+  background: rgba(0, 0, 0, 0.003);
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+}
+
+.main {
+  z-index: 2;
+  border-top: 1px solid #e6e6e6;
+  height: 270px;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
-body, #app {
-  width: 350px;
-  height: 525px;
+
+label[for='toggle-all'] {
+  display: none;
+}
+
+.toggle-all {
+  position: absolute;
+  top: -55px;
+  left: -12px;
+  width: 60px;
+  height: 34px;
+  text-align: center;
+  border: none;
+  /* Mobile Safari */
+}
+
+.toggle-all:before {
+  content: '❯';
+  font-size: 22px;
+  color: #e6e6e6;
+  padding: 10px 27px 10px 27px;
+}
+
+.toggle-all:checked:before {
+  color: #737373;
+}
+
+.todo-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.todo-list li {
+  position: relative;
+  font-size: 14px;
+  border-bottom: 1px solid #ededed;
+  height: 32px;
+  line-height: 32px;
+  box-sizing: border-box;
+}
+
+.todo-list li:last-child {
+  // border-bottom: none;
+}
+
+.todo-list li.editing {
+  border-bottom: none;
+  padding: 0;
+}
+
+.todo-list li.editing .edit {
+  display: block;
+  width: 506px;
+  padding: 13px 17px 12px 17px;
+  margin: 0 0 0 43px;
+}
+
+.todo-list li.editing .view {
+  display: none;
+}
+
+.todo-list li .toggle {
+  text-align: center;
+  width: 40px;
+  /* auto, since non-WebKit browsers doesn't support input styling */
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  border: none;
+  /* Mobile Safari */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.todo-list li .toggle:after {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+}
+
+.todo-list li .toggle:checked:after {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+}
+
+.todo-list li.completed label {
+  color: #d9d9d9;
+  text-decoration: line-through;
+}
+
+.todo-list li .destroy {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 25px;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  margin: auto 0;
+  font-size: 20px;
+  text-align: center;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+  line-height: 20px;
+  background: #fff;
+  border: 1px solid #c1c2c3;
+  border-radius: 3px;
+}
+
+.todo-list li .destroy:hover {
+  color: red;
+}
+
+.todo-list li .destroy:after {
+  content: '×';
+}
+
+.todo-list li:hover .destroy {
+  display: block;
+}
+
+.todo-list li .edit {
+  display: none;
+}
+
+.todo-list li.editing:last-child {
+  margin-bottom: -1px;
+}
+
+.footer {
+  color: #777;
+  padding: 10px 15px;
+  height: 20px;
+  text-align: center;
+}
+
+.todo-count {
+  float: left;
+  text-align: left;
+}
+
+.todo-count strong {
+  font-weight: 300;
+}
+
+.filters {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+.filters>li {
+  display: inline;
+  padding: 3px 0;
+}
+
+.filters li a {
+  color: inherit;
+  margin: 3px;
+  padding: 3px 7px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+.filters li a.selected,
+.filters li a:hover {
+  border-color: rgba(175, 47, 47, 0.1);
+}
+
+.filters li a.selected {
+  border-color: rgba(175, 47, 47, 0.2);
+}
+
+.clear-completed,
+html .clear-completed:active {
+  float: right;
+  position: relative;
+  line-height: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.clear-completed:hover {
+  text-decoration: underline;
+}
+
+.info {
+  margin: 65px auto 0;
+  color: #bfbfbf;
+  font-size: 10px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.info p {
+  line-height: 1;
+}
+
+.info a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.info a:hover {
+  text-decoration: underline;
+}
+
+
+/*
+    Hack to remove background from Mobile Safari.
+    Can't use it globally since it destroys checkboxes in Firefox
+*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .toggle-all,
+  .todo-list li .toggle {
+    background: none;
+  }
+  .todo-list li .toggle {
+    height: 40px;
+  }
+  .toggle-all {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .footer {
+    height: 50px;
+  }
+  .filters {
+    bottom: 10px;
+  }
+}
+
+// 任务
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 150px;
+  border: 1px solid #b5b6b5;
+  overflow: scroll;
+  text-align: left;
+  max-height: 380px;
+  list-style: none;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.dropdown-item {
+  line-height: 24px;
+  height: 24px;
+  text-indent: 1em;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+  background-color: #4db0f4;
+  color: #fff;
+}
+
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  z-index: 100;
+  transition: opacity .3s
+}
+
+.filters .active {
+  background-color: #4db0f4;
+  color: #fff;
+}
+
+.placeholder {
+  text-align: center;
+}
+
+.navbar,
+#footer {
+  background: #f7f7f8;
+}
+
+.navbar {
+  height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: auto;
+  top: auto;
+  height: 1px;
+  width: 100%;
+  background-color: #c4c4c4;
+  display: block;
+  z-index: 15;
+  -webkit-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+}
+
+i.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-style: normal;
+  position: relative;
+}
+
+i.icon.icon-back {
+  width: 12px;
+  height: 20px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2012%2020'%3E%3Cpath%20d%3D'M10%2C0l2%2C2l-8%2C8l8%2C8l-2%2C2L0%2C10L10%2C0z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
+}
+
+.navbar .center {
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
   margin: 0;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 44px;
+  flex-shrink: 10;
+  padding: 0 10px;
+}
+
+.navbar .left,
+.navbar .right {
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  transform: translate3d(0, 0, 0);
+}
+
+.navbar .left:hover,
+.filters li {
+  cursor: pointer
+}
+
+.navbar .right {
+  width: 53px;
+  justify-content: center;
+}
+
+.navbar,
+.toolbar {
+  height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 17px;
+  position: relative;
+  margin: 0;
+  z-index: 500;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.navbar span {
+  margin-left: 7px
+}
+
+.todo-list .tip {
+  text-align: center;
+  margin-top: 30%;
+  font-size: 20px;
+  color: gray;
+}
+
+.todo-list a.detail {
+  float: right;
+  padding-right: 5px;
+}
+
+.todo-list .content {
+  border: none;
+  height: 20px;
+  line-height: 20px;
+  text-indent: 5px;
+  text-indent: 5px;
+  width: 78%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.4s;
+}
+
+.todo-list .content:focus {
+  background: #f1f1f1;
+}
+
+.fade-transition {
+  opacity: 1;
+  -webkit-transition: opacity linear 0.2s;
+  transition: opacity linear 0.2s
+}
+
+.fade-enter,
+.fade-leave {
+  opacity: 0;
+}
+
+
+/****************************
+  ANIMATIONS
+*****************************/
+
+@keyframes clockwise {
+  to {
+    transform: rotate(360deg) translatez(0);
+  }
+}
+
+@keyframes counter-clockwise {
+  to {
+    transform: rotate(-360deg) translatez(0);
+  }
+}
+
+
+/****************************
+  ANDROID SPINNER
+*****************************/
+
+.progress-spinner {
+  height: 30px;
+  width: 30px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(112, 112, 112, 0.75) rgba(36, 36, 36, 0.25) rgba(36, 36, 36, 0.25) rgba(36, 36, 36, 0.25);
+  border-radius: 100%;
+  animation: clockwise 0.75s linear infinite;
+}
+
+
+/* position spinner in the middle of the page for demonstration */
+
+.progress-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -15px;
+  margin-top: -15px;
+  z-index: 1000;
 }
