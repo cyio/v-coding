@@ -83,7 +83,13 @@ class App extends React.Component {
         })
 				Storage.setValue('projects', projects)
       })
-      .catch(error => console.error(error))
+      .catch(error => {
+				Storage.setValue('projects', null)
+				Storage.setValue('user', null)
+        chrome.tabs.create({
+          url: "https://coding.net/login"
+        });
+      })
   }
 
   getUser() {
@@ -99,6 +105,7 @@ class App extends React.Component {
           'points_left': userData.points_left
         }
         this.setState({user: user})
+				Storage.setValue('user', user)
       }
     });
   }
@@ -131,14 +138,16 @@ class App extends React.Component {
 
   componentDidMount() {
     const projects = Storage.getValue('projects')
-    this.getUser()
+    const user = Storage.getValue('user')
     if (projects) {
       this.setState({
         projects: projects,
+        user: user,
         loading: false
       })
     } else {
       this.loadProjects()
+      this.getUser()
     }
   }
 
