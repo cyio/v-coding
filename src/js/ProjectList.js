@@ -46,7 +46,7 @@ export default class ProjectList extends React.Component {
 									document.execCommand("Copy")
                 }}>
                   <img src="/images/clippy.svg" />
-                  <input className="to-copy" data-id={project.name} value={project.ssh_url} />
+                  <input className="to-copy" data-id={project.name} defaultValue={project.ssh_url} />
                 </span>
               </div>
             )

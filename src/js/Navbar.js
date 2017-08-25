@@ -16,10 +16,10 @@ export default class Navbar extends React.Component {
   }
 
   render() {
-    const { user, loadProjects, removeActivityCount } = this.props
+    const { user, loadProjects, removeActivityCount, filterProjects } = this.props
     return (
       <div className="navbar">
-        <input className="search-projects" autoFocus="autofocus" value="name" onChange={() => console.log()}/>
+        <input className="search-projects" autoFocus="autofocus" onChange={filterProjects}/>
         <div className="navbar-buttons">
           <div className="toolbar-item refresh-projects" id="refresh-projects" onClick={loadProjects}>
             <img src="/images/sync.svg" />

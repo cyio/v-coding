@@ -21,6 +21,7 @@ class App extends React.Component {
     this.state = {
       user: null,
       projects: null,
+      filteredProjects: null,
       notificationUnreadProjects: [],
       loading: true
     }
@@ -76,7 +77,6 @@ class App extends React.Component {
 
     this.getProjects()
       .then(projects => {
-        // return this.addDefaultBranch(projects)
         this.setState({
           projects: projects,
           loading: false
@@ -119,6 +119,16 @@ class App extends React.Component {
     });
   }
 
+  filterProjects(event) {
+    const input = event.target.value
+    let tmp = this.state.projects.filter(project => {
+      const re = new RegExp(input, 'i')
+      return re.test(project.name)
+    })
+
+    this.setState({filteredProjects: tmp})
+  }
+
   componentDidMount() {
     const projects = Storage.getValue('projects')
     this.getUser()
@@ -138,8 +148,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar user={this.state.user} loadProjects={this.loadProjects.bind(this)} removeActivityCount={this.removeActivityCount.bind(this)} />
-        <ProjectList projects={this.state.projects} loading={this.state.loading} />
+        <Navbar user={this.state.user} loadProjects={this.loadProjects.bind(this)} removeActivityCount={this.removeActivityCount.bind(this)} filterProjects={this.filterProjects.bind(this)} />
+        <ProjectList projects={this.state.filteredProjects || this.state.projects} loading={this.state.loading} />
       </div>
     )
   }
