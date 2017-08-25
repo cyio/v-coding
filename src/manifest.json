@@ -14,13 +14,13 @@
     "matches": [ "http://*/*", "https://*/*" ],
     "js": [ "js/content.js" ]
   }],
-  "options_page": "html/options.html",
   "permissions": [
     "notifications",
     "cookies",
 		"storage",
-    "webRequest",
-    "webRequestBlocking"
+		"alarms",
+		"tabs",
+		"https://coding.net/*/*"
   ],
   "web_accessible_resources": [ "js/*", "html/*", "css/*", "images/*" ],
   "name": "<%= package.name %>",

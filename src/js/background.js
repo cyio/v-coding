@@ -1,15 +1,32 @@
-import axios from 'axios'
 import { backgroundConnector, Storage } from './modules/utils'
+import { CodingAPI } from './api.js'
+import $ from 'jquery'
 
-var port = new backgroundConnector();
-port.name = "chrome-extension-skeleton";
-port.init((msg) => {
-  // console.log('backend msg', msg)
-  switch(msg.act){
-    case "say hello":
-      console.log('hello')
-      port.send({act: 'world'})
-      console.log('version value is ' + Storage.getValue('ver'))
-      break;
-  }
+chrome.alarms.create('unread', {
+	periodInMinutes: 1
 });
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+	updateActivityCount() 
+});
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+	if (message === 'updateBadgeCount') {
+		setTimeout(()=>{
+			updateActivityCount()
+		}, 2000)
+	}
+});
+
+const updateActivityCount = () => {
+	let num = 0
+
+	CodingAPI.projects('all', (projects) => {
+		if (!projects.code) {
+			$.map(projects, (project) => {
+				num += project.un_read_activities_count || 0;
+			});
+		}
+		chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
+	});
+
+}
