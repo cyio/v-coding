@@ -1,6 +1,6 @@
 {
   "name": "v-coding",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "增强 coding.net 使用体验，源代码地址：https://github.com/cyio/v-coding",
   "engines": {
     "node": "7.0.0",

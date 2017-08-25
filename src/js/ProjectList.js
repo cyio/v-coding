@@ -34,7 +34,9 @@ export default class ProjectList extends React.Component {
             return (
               <div className="project" key={index}>
                 <div className="main-link">
-                  { project.isPrivate && <i className="icon"><img src="/images/lock.svg" /></i> } 
+                  <i className="icon">
+                    { project.isPrivate && <img src="/images/lock.svg" /> } 
+                  </i> 
                   <a className href={baseUrl + project.path} target="_blank" onClick={this.updateBadgeCount}>{project.name}</a>
                   { project.activityUpdateCount > 0 && <span className="activity-update-count update-count-tip" >{project.activityUpdateCount}</span> } 
                 </div>

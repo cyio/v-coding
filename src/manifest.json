@@ -15,12 +15,9 @@
     "js": [ "js/content.js" ]
   }],
   "permissions": [
-    "notifications",
-    "cookies",
 		"storage",
 		"alarms",
-		"tabs",
-		"https://coding.net/*/*"
+		"tabs"
   ],
   "web_accessible_resources": [ "js/*", "html/*", "css/*", "images/*" ],
   "name": "<%= package.name %>",

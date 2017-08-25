@@ -2,7 +2,7 @@
 
 <a href="https://chrome.google.com/webstore/detail/oojdnccablnopmpcghpmfgpbcbgacagf"><img src="https://camo.githubusercontent.com/334b4f665751356b1f4afb758f8ddde55b9c71b8/68747470733a2f2f7261772e6769746875622e636f6d2f476f6f676c654368726f6d652f6368726f6d652d6170702d73616d706c65732f6d61737465722f74727969746e6f77627574746f6e5f736d616c6c2e706e67" border="0" /></a>
 
-> 1.0 旧版本代码 https://github.com/cyio/v-coding/tree/1.0
+> 1.0 旧版本代码 https://github.com/cyio/v-coding/tree/1.0 
 > 2.0 使用 react 编写，主要变化是移除了 任务处理
 
 ### 主要特性
