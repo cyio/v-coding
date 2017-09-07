@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import axios from 'axios'
 import $ from 'jquery'
 import { mainConnector, Storage } from './modules/utils'
-import Navbar from './Navbar'
-import ProjectList from './ProjectList'
+import Navbar from './components/Navbar'
+import ProjectList from './components/ProjectList'
 import { CodingAPI } from './api.js'
 // console.log(CodingAPI)
 
@@ -142,11 +142,16 @@ class App extends React.Component {
     if (projects) {
       this.setState({
         projects: projects,
-        user: user,
         loading: false
       })
     } else {
       this.loadProjects()
+    }
+    if (user) {
+      this.setState({
+        user: user
+      })
+    } else {
       this.getUser()
     }
   }
