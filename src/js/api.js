@@ -226,6 +226,34 @@ var randomID = function () {
   return Math.random().toString(36).substring(2);
 };
 
+var getProjects = function () {
+  return new Promise(
+    (resolve, reject) => {
+      CodingAPI.projects('all', result => {
+        if (!result.code) {
+          // console.log(result)
+          const projects = $.map(result, project => {
+            return {
+              'user': project.owner_user_name,
+              'path': project.project_path,
+              'icon': project.icon,
+              'name': project.name,
+              'id': project.id,
+              'https_url': project.https_url,
+              'ssh_url': project.ssh_url,
+              'isPrivate': !project.is_public,
+              'activityUpdateCount': project.un_read_activities_count || 0
+            };
+          })
+          resolve(projects);
+        } else {
+          reject()
+        }
+      });
+    }
+  );
+}
+
 export var CodingAPI = {
   sort: sort,
   get: get,
@@ -249,5 +277,6 @@ export var CodingAPI = {
   share: share,
   removeCount: removeActivityCount,
   host: CODING_HOST,
-  randomID: randomID
+  randomID: randomID,
+  getProjects: getProjects
 };

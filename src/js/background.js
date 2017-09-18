@@ -19,14 +19,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 const updateActivityCount = () => {
 	let num = 0
+  let notificationUnreadProjects = []
 
-	CodingAPI.projects('all', (projects) => {
-		if (!projects.code) {
-			$.map(projects, (project) => {
-				num += project.un_read_activities_count || 0;
-			});
-		}
-		chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
-	});
+  CodingAPI.getProjects()
+    .then(projects => {
+      $.map(projects, (project) => {
+        if (!!project.un_read_activities_count) {
+          num = num + 1
+          notificationUnreadProjects.push(project)
+        }
+      });
+
+      chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
+      Storage.setValue('projects', projects)
+      Storage.setValue('notificationUnreadProjects', notificationUnreadProjects)
+    })
 
 }

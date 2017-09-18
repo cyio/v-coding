@@ -27,39 +27,6 @@ class App extends React.Component {
     }
   }
 
-  getProjects() {
-    return new Promise(
-      (resolve, reject) => {
-        CodingAPI.projects('all', result => {
-          if (!result.code) {
-            console.log(result)
-            const projects = $.map(result, project => {
-              if (!!project.un_read_activities_count) {
-                let tmp = this.state.notificationUnreadProjects
-                tmp.push(project)
-                this.setState({notificationUnreadProjects: tmp})
-              }
-              return {
-                'user': project.owner_user_name,
-                'path': project.project_path,
-                'icon': project.icon,
-                'name': project.name,
-                'id': project.id,
-                'https_url': project.https_url,
-                'ssh_url': project.ssh_url,
-                'isPrivate': !project.is_public,
-                'activityUpdateCount': project.un_read_activities_count || 0
-              };
-            })
-            resolve(projects);
-          } else {
-            reject()
-          }
-        });
-      }
-    );
-  }
-
   async addDefaultBranch(projects) {
     for (let project of projects) {
       await $.get(`https://coding.net/api/user/${project.user}/project/${project.name}/git/branches`, (result, status, request) => {
@@ -75,13 +42,20 @@ class App extends React.Component {
   loadProjects() {
     this.setState({loading: true})
 
-    this.getProjects()
+    CodingAPI.getProjects()
       .then(projects => {
         this.setState({
           projects: projects,
           loading: false
         })
+        let notificationUnreadProjects = []
+        $.map(projects, (project) => {
+          if (!!project.un_read_activities_count) {
+            notificationUnreadProjects.push(project)
+          }
+        });
 				Storage.setValue('projects', projects)
+        Storage.setValue('notificationUnreadProjects', notificationUnreadProjects)
       })
       .catch(error => {
 				Storage.setValue('projects', null)
@@ -112,13 +86,14 @@ class App extends React.Component {
 
 
   removeActivityCount() {
-    console.log(this.state.notificationUnreadProjects)
+    // console.log(this.state.notificationUnreadProjects)
     const ids = $.map(this.state.notificationUnreadProjects, project => project.id);
     CodingAPI.removeCount(ids, () => {
       $.each(this.state.projects, (i, project) => {
         project.activityUpdateCount = 0;
       });
       this.setState({notificationUnreadProjects: []})
+      Storage.setValue('notificationUnreadProjects', [])
       this.loadProjects();
       chrome.browserAction.setBadgeText({
         text: ''
@@ -139,9 +114,11 @@ class App extends React.Component {
   componentDidMount() {
     const projects = Storage.getValue('projects')
     const user = Storage.getValue('user')
+    const notificationUnreadProjects = Storage.getValue('notificationUnreadProjects')
     if (projects) {
       this.setState({
         projects: projects,
+        notificationUnreadProjects: notificationUnreadProjects,
         loading: false
       })
     } else {
