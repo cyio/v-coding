@@ -14,6 +14,7 @@ function updateActivityCount () {
         }
       })
 
+			chrome.browserAction.setBadgeBackgroundColor({color: '#f75288'})
       chrome.browserAction.setBadgeText({ text: num > 0 ? String(num) : '' });
       Storage.setValue('projects', projects)
       Storage.setValue('notificationUnreadProjects', notificationUnreadProjects)
